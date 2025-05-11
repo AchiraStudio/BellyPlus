@@ -3,126 +3,23 @@
     box-sizing: border-box;
     font-family: "Poppins", sans-serif;
     font-style: normal;
+    /* outline: 1px solid rgba(255, 0, 0, 0.2); */ /* Optional: Use for debugging */
 }
 
 body {
     background-color: #f5e5ecd3;
-}
-
-.navbar {
-    width: 100vw;
-    height: 125px;
-    position: fixed;
-    top: 0;
-    background: #f5f1f3;
-    box-shadow: 0px 7px 17px 0px rgba(0,0,0,0.75);
-    -webkit-box-shadow: 0px 7px 17px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 7px 17px 0px rgba(0,0,0,0.75);
-    overflow-x: hidden;
-    z-index: 999;
-    display: flex;
-    overflow: hidden;
-}
-.logo {
-    height: 100%;
-    width: 100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: 6.5rem;
-    overflow: visible;
-}
-#plus {
-    width: 15px;
-    height: 15px;
-    fill: red;
-    transform: translate(2px, -9px);
-}
-
-#top {
-    display: flex;
-    height: 80vh;
-    align-items: center;
-    justify-content: center;
-    width: 100vw;
-    margin-top: 15vh;
-    overflow: hidden;
-}
-/* Search */
-.search {
-    flex-grow: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.search-input {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 25px;
-    width: 250px;
-    font-size: 16px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    transition: width 0.3s ease-in-out;
-}
-.search-input:focus {
-    outline: none;
-    width: 300px;
-}
-
-/* Burger Menu */
-.burger {
-    font-size: 30px;
-    cursor: pointer;
-    padding: 10px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 2rem;
-}
-
-/* Side Nav */
-.nav-links {
-    position: fixed;
-    top: 125px;
-    right: 0;
-    width: 220px;
-    background-color: white;
-    display: flex; /* 🔥 This line is missing! */
-    flex-direction: column;
-    padding: 20px;
-    box-shadow: -2px 0 10px rgba(0,0,0,0.2);
-    transform: translateX(100%);
-    transition: transform 0.4s ease-in-out;
-    z-index: 998;
-    opacity: 0;
-    pointer-events: none;
-}
-.nav-links a {
-    padding: 10px 0;
-    text-decoration: none;
-    color: #333;
-    font-weight: bold;
-    transition: 0.3s;
-}
-.nav-links a:hover {
-    color: #8C062D;
-}
-/* Active state - slide in */
-.nav-active {
-    transform: translateX(0);
-    opacity: 1;
-    pointer-events: all;
+    overflow-x: hidden; /* Prevent horizontal overflow */
 }
 
 .hero-container {
-    width: 95vw;
+    width: 95%;
     height: 75vh;
     border-radius: 20px;
     background: rgba(218, 218, 230, 0.767);
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap; /* In case screen is too small */
 }
 
 .main-img {
@@ -154,86 +51,154 @@ body {
 #title h1 {
     font-size: 40px;
 }
-.first {
-    background: #e62727;
-    background: -webkit-linear-gradient(133deg, rgba(230, 39, 39, 1) 0%, rgba(194, 112, 112, 1) 100%);
-    background: -moz-linear-gradient(133deg, rgba(230, 39, 39, 1) 0%, rgba(194, 112, 112, 1) 100%);
-    background: linear-gradient(133deg, rgba(230, 39, 39, 1) 0%, rgba(194, 112, 112, 1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#E62727", endColorstr="#C27070", GradientType=0);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;   
-}
-.second {
-    background: #222be0;
-    background: -webkit-linear-gradient(133deg, rgba(34, 43, 224, 1) 0%, rgba(65, 32, 176, 1) 60%);
-    background: -moz-linear-gradient(133deg, rgba(34, 43, 224, 1) 0%, rgba(65, 32, 176, 1) 60%);
-    background: linear-gradient(133deg, rgba(34, 43, 224, 1) 0%, rgba(65, 32, 176, 1) 60%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#222BE0", endColorstr="#4120B0", GradientType=0);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;   
-}
+
 #desc p {
     font-size: 18px;
 }
 
-/* Features */
-.features {
+/* Features Section */
+#features {
+    width: 100%;
+    padding: 4rem 1rem;
+    background: #f5e5ecd3;
+    box-sizing: border-box;
     display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    border-radius: 20px;
+    height: 80vh;
+    align-items: center; /* Center content vertically */
     justify-content: center;
-    align-items: center;
-    width: 100vw;
-    min-height: 50vh;
 }
 
+/* Tab Container - Left Column */
 .selection {
     display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.container {
-    width: 95%;
-    margin-top: 20px;
-    overflow-x: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-/* Hide all content by default */
-.content {
-    width: 100%;
-    display: none;
-    padding: 20px;
-    background: #f9f9f9;
-    border-radius: 8px;
+    flex-direction: column; /* Stack the tabs vertically */
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 1.5rem;
+    margin-right: 2rem; /* Space between tabs and content */
+    flex: 1; /* Allow tabs to take up a portion of the container */
+    min-width: 200px; /* Prevent tabs from being too narrow */
+    align-self: flex-start; /* Align the tabs container to the top */
 }
 
-/* Show only the active content */
-.content.active {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* Tab styles */
+/* Individual Tab Cards */
 .tab {
+    background-color: #ffffff;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    width: 100%;
+    height: auto; /* Allow tabs to adjust height dynamically */
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    font-weight: 600;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     cursor: pointer;
-    padding: 10px 20px;
-    margin-right: 10px;
-    background: #eee;
-    border-radius: 5px;
-    display: inline-block;
-    font-weight: bold;
-    transition: background 0.3s ease;
-    width: 200px;
-    height: 250px;
-    margin: 20px;
+    transition: all 0.3s ease;
+    min-height: 120px; /* Ensure tabs have consistent height */
 }
 
 .tab:hover {
-    background: #ddd;
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 .tab.active {
-    background: #8C062D;
-    color: white;
+    background-color: #8C062D;
+    color: #ffffff;
+}
+
+/* Content Container - Right Column */
+.container-feat {
+    display: flex;
+    flex-direction: column; /* Stack the content vertically */
+    align-items: flex-start;
+    gap: 1.5rem;
+    flex: 3; /* Allow content to take more space */
+    padding: 0 1rem;
+    width: 100%;
+    align-self: flex-end; /* Align content to the top */
+    margin-left: 15rem;
+}
+
+/* Hide all content by default */
+.content-feat {
+    display: none;
+    flex-direction: column;
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+    gap: 1rem;
+    animation: fadeIn 0.3s ease;
+}
+
+.content-feat.active {
+    display: flex;
+}
+
+/* Text content inside each tab panel */
+.content-feat .text {
+    font-size: 1rem;
+    color: #444;
+    text-align: center;
+    line-height: 1.6;
+}
+
+/* Button style inside content */
+.content-feat .button a {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.75rem 1.5rem;
+    background-color: #760021;
+    color: #fff;
+    border-radius: 8px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.content-feat .button a:hover {
+    background-color: #60001b;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive layout - Stacked layout on smaller screens */
+@media (max-width: 768px) {
+    #features {
+        flex-direction: column; /* Stack both the tabs and content vertically */
+    }
+
+    .selection {
+        flex-direction: row; /* Stack tabs in a row */
+        gap: 1rem;
+        margin-right: 0;
+        margin-bottom: 2rem;
+        align-items: center; /* Center tabs horizontally */
+    }
+
+    .tab {
+        width: auto;
+        height: auto;
+    }
+
+    .container-feat {
+        padding: 0 1rem;
+    }
+}
+
+@media screen and (max-width: 431px) {
+    #top, #features {
+        display: none;
+    }
 }

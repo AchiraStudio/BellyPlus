@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forum - BellyPlus</title>
+    <link rel="stylesheet" href="../css/profile-acc.css">
+    <link rel="stylesheet" href="../css/style-forum.css">
+</head>
+<body>
+    <!-- Ignore This -->
+    <div class="navbar">
+        <div class="logo">
+            <h1 class="main-text first">Belly</h1>
+            <h1 class="main-text second">Plus</h1>
+        </div>
+        <div class="search">
+            <input type="text" placeholder="Search..." class="search-input" />
+        </div>
+        <div class="acc" id="acc-desktop">
+            <div class="button log-in">Masuk</div>
+            <div class="button sign-in">Daftar</div>
+        </div>
+        <div class="burger" id="burger">
+            <svg width="30" height="30" viewBox="0 0 100 80" fill="black">
+                <rect width="100" height="15" rx="8"></rect>
+                <rect y="30" width="100" height="15" rx="8"></rect>
+                <rect y="60" width="100" height="15" rx="8"></rect>
+            </svg>
+        </div>
+    </div>
+    <nav class="nav-links" id="nav-links">
+        <div class="burger" id="burger-close">
+            <svg width="30" height="30" viewBox="0 0 100 80" fill="black">
+                <rect width="100" height="15" rx="8"></rect>
+                <rect y="30" width="100" height="15" rx="8"></rect>
+                <rect y="60" width="100" height="15" rx="8"></rect>
+            </svg>
+        </div>
+        <a href="#top">Home</a>
+        <a href="#features">Fitur-Fitur</a>
+        <a href="#">Services</a>
+        <a href="#">Contact</a>
+        <div class="acc android" id="acc-mobile">
+            <div class="button log-in">Masuk</div>
+            <div class="button sign-in">Daftar</div>
+        </div>
+    </nav>
+    <!-- Ignore This -->
+    <div class="box-hider"></div>
+
+    <!-- Main Forum -->
+    <div id="forum">
+        <div class="profile">
+            <div class="acc"></div>
+            <div class="chat-menu">
+                <div class="chat-container main-forum" data-title="Forum" data-id="forum">
+                    <img src="https://via.placeholder.com/40" class="avatar" />
+                    <div class="contact-name">Forum</div>
+                </div>
+                <div class="chat-container doctor1" data-title="Doctor 1" data-id="doctor1">
+                    <img src="https://via.placeholder.com/40" class="avatar" />
+                    <div class="contact-name">Doctor 1</div>
+                </div>
+                <div class="chat-container doctor2" data-title="Doctor 2" data-id="doctor2">
+                    <img src="https://via.placeholder.com/40" class="avatar" />
+                    <div class="contact-name">Doctor 2</div>
+                </div>
+                <div class="chat-container doctor3" data-title="Doctor 3" data-id="doctor3">
+                    <img src="https://via.placeholder.com/40" class="avatar" />
+                    <div class="contact-name">Doctor 3</div>
+                </div>
+            </div>
+        <button id="clearChatBtn">Clear Chat</button>
+
+        </div>
+
+        <div class="chat-box">
+            <div class="title">Select a chat</div>
+            <div class="messages"></div>
+            <div class="message-input">
+            <input type="text" id="messageInput" placeholder="Type your message..." />
+            <button id="sendMessage">Send</button>
+            </div>
+        </div>
+    </div>
+    <!-- End Forum -->
+
+
+    <!-- Ignore This -->
+    <div class="container" id="formPage">
+        <form id="userForm" class="card input-card">
+          <h2><i class="fas fa-user-plus"></i> Data Pengguna</h2>
+          <div class="form-group">
+            <label for="name">Nama Lengkap</label>
+            <input type="text" id="name" placeholder="Masukkan Nama" required />
+          </div>
+          <div class="form-group">
+            <label for="bellyId">ID BellyPlus</label>
+            <input type="text" id="bellyId" placeholder="Contoh: BP-XXXXXX" required />
+          </div>
+          <button type="submit"><i class="fas fa-bell"></i>Masuk</button>
+          <button type="button" onclick="document.getElementById('formPage').style.display='none'">Tutup</button>
+        </form>
+    </div>
+
+    <!-- Ignore This -->
+    <script src="../js/navlink.js"></script>
+    <script src="../js/chat-bot.js"></script>
+    <script src="../js/readdata.js"></script>
+    <script>
+        // Select elements
+        const chatContainers = document.querySelectorAll('.chat-container');
+        const title = document.querySelector('.chat-box .title');
+        const messagesContainer = document.querySelector('.messages');
+        const messageInput = document.querySelector('#messageInput');
+        const sendMessageButton = document.querySelector('#sendMessage');
+
+        let currentChatId = null;
+
+        // Load stored messages or init object
+        let chatMessages = JSON.parse(localStorage.getItem('chatMessages')) || {};
+
+        // Load messages into the UI
+        function loadMessages(chatId) {
+            messagesContainer.innerHTML = '';
+            const msgs = chatMessages[chatId] || [];
+            msgs.forEach(msg => {
+                const bubble = document.createElement('div');
+                bubble.classList.add('message-bubble');
+
+                bubble.innerHTML = `
+                    <div class="message-header">
+                        <img src="${msg.avatar}" alt="Avatar" class="bubble-avatar">
+                        <div class="bubble-info">
+                            <div class="bubble-name">${msg.name}</div>
+                            <div class="bubble-text">${msg.text}</div>
+                        </div>
+                    </div>
+                `;
+                messagesContainer.appendChild(bubble);
+            });
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Handle chat selection
+        chatContainers.forEach(container => {
+            container.addEventListener('click', () => {
+                const chatId = container.dataset.id;
+                const chatTitle = container.dataset.title;
+
+                currentChatId = chatId;
+                title.textContent = chatTitle;
+
+                loadMessages(chatId);
+                messageInput.value = '';
+            });
+        });
+
+        // Send message function
+        function sendMessage(text) {
+            if (!currentChatId || !text.trim()) return;
+
+            const userData = JSON.parse(localStorage.getItem('userFormData')) || { name: "Anonymous", bellyId: "0000" };
+            const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(userData.name)}&background=26a69a&color=fff&rounded=true&size=40`;
+
+            const msg = {
+                text: text,
+                name: userData.name,
+                avatar: avatarUrl
+            };
+
+            // Save to localStorage
+            if (!chatMessages[currentChatId]) chatMessages[currentChatId] = [];
+            chatMessages[currentChatId].push(msg);
+            localStorage.setItem('chatMessages', JSON.stringify(chatMessages));
+
+            // Append to UI
+            const bubble = document.createElement('div');
+            bubble.classList.add('message-bubble');
+            bubble.innerHTML = `
+                <div class="message-header">
+                    <img src="${avatarUrl}" alt="Avatar" class="bubble-avatar">
+                    <div class="bubble-info">
+                        <div class="bubble-name">${userData.name}</div>
+                        <div class="bubble-text">${text}</div>
+                    </div>
+                </div>
+            `;
+            messagesContainer.appendChild(bubble);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Send button handler
+        sendMessageButton.addEventListener('click', () => {
+            const message = messageInput.value.trim();
+            if (message) {
+                sendMessage(message);
+                messageInput.value = '';
+            }
+        });
+
+        // Send on Enter key press
+        messageInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault(); // Prevent newline
+                const message = messageInput.value.trim();
+                if (message) {
+                    sendMessage(message);
+                    messageInput.value = '';
+                }
+            }
+        });
+        const clearChatButton = document.getElementById('clearChatBtn');
+
+        clearChatButton.addEventListener('click', () => {
+            if (!currentChatId) return;
+            if (confirm("Are you sure you want to clear this chat?")) {
+                chatMessages[currentChatId] = [];
+                localStorage.setItem('chatMessages', JSON.stringify(chatMessages));
+                messagesContainer.innerHTML = '';
+            }
+        });
+    </script>
+</body>
+</html>

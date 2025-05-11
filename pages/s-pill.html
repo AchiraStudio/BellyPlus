@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Pill Statistik</title>
+  <link rel="stylesheet" href="../css/style-spill.css" />
+  <link rel="stylesheet" href="../css/profile-acc.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #e0f7fa, #f1f8e9);
+      margin: 0;
+      padding: 2rem;
+      color: #333;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+  </style>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+</style>
+</head>
+
+    <div class="navbar">
+        <div class="logo">
+            <h1 class="main-text first">Belly</h1>
+            <h1 class="main-text second">Plus</h1>
+        </div>
+        <div class="search">
+            <input type="text" placeholder="Search..." class="search-input" />
+        </div>
+        <div class="acc" id="acc-desktop">
+            <div class="button log-in">Masuk</div>
+            <div class="button sign-in">Daftar</div>
+        </div>
+        <div class="burger" id="burger">
+            <svg width="30" height="30" viewBox="0 0 100 80" fill="black">
+                <rect width="100" height="15" rx="8"></rect>
+                <rect y="30" width="100" height="15" rx="8"></rect>
+                <rect y="60" width="100" height="15" rx="8"></rect>
+            </svg>
+        </div>
+    </div>
+    
+    <nav class="nav-links" id="nav-links">
+        <div class="burger" id="burger-close">
+            <svg width="30" height="30" viewBox="0 0 100 80" fill="black">
+                <rect width="100" height="15" rx="8"></rect>
+                <rect y="30" width="100" height="15" rx="8"></rect>
+                <rect y="60" width="100" height="15" rx="8"></rect>
+            </svg>
+        </div>
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Services</a>
+        <a href="#">Contact</a>
+        <div class="acc android" id="acc-mobile">
+            <div class="button log-in">Masuk</div>
+            <div class="button sign-in">Daftar</div>
+        </div>
+    </nav>
+
+    <div id="statsPage" class="stats-grid">
+    <!-- Floating Action Button -->
+    <div class="fab">
+        <i class="fas fa-chart-line"></i>
+    </div>
+    
+    <!-- User Profile Card -->
+    <div class="grid-item profile-card glassmorphism">
+        <div class="profile-header">
+            <h3><i class="fas fa-user-circle"></i> Profil Pengguna</h3>
+            <div class="badge">Aktif</div>
+        </div>
+        <div class="profile-content">
+            <img id="user-avatar" src="" alt="Avatar">
+            <div class="profile-details">
+                <p><strong>Nama:</strong> <span id="statName">Loading...</span></p>
+                <p><strong>ID BellyPlus:</strong> <span id="statBellyId">Loading...</span></p>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 75%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="profile-stats">
+            <div class="stat-item">
+                <div class="stat-value">24</div>
+                <div class="stat-label">Obat</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">89%</div>
+                <div class="stat-label">Kepatuhan</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">56</div>
+                <div class="stat-label">Hari</div>
+            </div>
+        </div>
+        <div class="logout-container">
+            <button id="logoutBtn" class="btn-logout">
+                <i class="fas fa-sign-out-alt"></i> Keluar
+            </button>
+        </div>          
+    </div>
+
+    <!-- Medicine Information Card -->
+    <div class="grid-item medicine-card glassmorphism">
+        <div class="medicine-header">
+            <h3><i class="fas fa-pills"></i> Informasi Obat</h3>
+            <div class="medicine-type">Tablet</div>
+        </div>
+        <div class="medicine-content">
+            <div class="medicine-image">
+                <img src="https://images.unsplash.com/photo-1587854692152-cbe660dbde88?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="Parasetamol">
+            </div>
+            <div class="medicine-details">
+                <h4>ID Obat: <span id="statPillId">PRCM-500-30</span></h4>
+                <div class="detail-item">
+                    <i class="fas fa-tag"></i>
+                    <span><strong>Jenis:</strong> Parasetamol 500mg</span>
+                </div>
+                <div class="detail-item">
+                    <i class="fas fa-heartbeat"></i>
+                    <span><strong>Manfaat:</strong> Mengurangi demam dan nyeri</span>
+                </div>
+                <div class="detail-item">
+                    <i class="fas fa-utensils"></i>
+                    <span><strong>Cara Minum:</strong> Sesudah makan</span>
+                </div>
+                <div class="detail-item">
+                    <i class="fas fa-clock"></i>
+                    <span><strong>Frekuensi:</strong> 3x sehari</span>
+                </div>
+            </div>
+        </div>
+        <div class="medicine-actions">
+            <button class="btn-info pulse">
+                <i class="fas fa-info-circle"></i> Detail Obat
+            </button>
+            <button class="btn-refill">
+                <i class="fas fa-prescription-bottle-alt"></i> Isi Ulang
+            </button>
+        </div>
+    </div>
+
+    <!-- Medicine Schedule Card -->
+    <div class="grid-item schedule-card glassmorphism">
+        <div class="schedule-header">
+            <h3><i class="fas fa-calendar-alt"></i> Jadwal Obat Hari Ini</h3>
+            <div class="day-indicator">Sabtu, 10 Mei 2025</div>
+        </div>
+        <div class="compliance-meter">
+            <div class="meter-gauge">
+                <div class="gauge-fill" style="transform: rotate(0.6turn)"></div>
+                <div class="gauge-center">
+                    <span>75%</span>
+                </div>
+            </div>
+            <div class="meter-labels">
+                <div class="label-item completed">
+                    <div class="label-dot"></div>
+                    <span>3/4 Dosis</span>
+                </div>
+                <div class="label-item">
+                    <div class="label-dot upcoming"></div>
+                    <span>Tepat Waktu</span>
+                </div>
+            </div>
+        </div>
+        <ul class="schedule-list">
+            <li class="schedule-item completed">
+                <div class="time-icon morning">
+                    <i class="fas fa-sun"></i>
+                </div>
+                <div class="schedule-details">
+                    <div class="time">07:00</div>
+                    <div class="status">Selesai</div>
+                </div>
+                <div class="schedule-action">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+            </li>
+            <li class="schedule-item completed">
+                <div class="time-icon afternoon">
+                    <i class="fas fa-cloud-sun"></i>
+                </div>
+                <div class="schedule-details">
+                    <div class="time">12:00</div>
+                    <div class="status">Selesai</div>
+                </div>
+                <div class="schedule-action">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+            </li>
+            <li class="schedule-item current">
+                <div class="time-icon evening">
+                    <i class="fas fa-cloud-moon"></i>
+                </div>
+                <div class="schedule-details">
+                    <div class="time">17:00</div>
+                    <div class="status">Dalam 15 menit</div>
+                </div>
+                <div class="schedule-action">
+                    <button class="btn-remind">
+                        <i class="fas fa-bell"></i> Ingatkan
+                    </button>
+                </div>
+            </li>
+            <li class="schedule-item">
+                <div class="time-icon night">
+                    <i class="fas fa-moon"></i>
+                </div>
+                <div class="schedule-details">
+                    <div class="time">21:00</div>
+                    <div class="status">Akan datang</div>
+                </div>
+                <div class="schedule-action">
+                    <i class="far fa-clock"></i>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Medical Facts Card -->
+    <div class="grid-item facts-card glassmorphism">
+        <div class="facts-header">
+            <h3><i class="fas fa-brain"></i> Fakta Medis Hari Ini</h3>
+            <div class="news-badge">BARU</div>
+        </div>
+        <div class="facts-content">
+            <div class="fact-item highlight">
+                <div class="fact-icon">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <div class="fact-text">
+                    <h4>Efektivitas Pengobatan</h4>
+                    <p>Minum obat secara teratur bisa meningkatkan efektivitas pengobatan hingga 80% dibandingkan dengan penggunaan yang tidak teratur.</p>
+                </div>
+            </div>
+            <div class="fact-item">
+                <div class="fact-icon">
+                    <i class="fas fa-globe-asia"></i>
+                </div>
+                <div class="fact-text">
+                    <h4>Masalah Global</h4>
+                    <p>WHO menyatakan kurang patuh minum obat adalah masalah kesehatan global yang mempengaruhi 50% pasien penyakit kronis.</p>
+                </div>
+            </div>
+            <div class="fact-image">
+                <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Medical Fact">
+                <div class="image-caption">Kepatuhan pengobatan meningkatkan hasil kesehatan</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delivery Card -->
+    <div class="grid-item deliver glassmorphism">
+        <div class="facts-header">
+
+        </div>
+        <div class="facts-content">
+            <div class="fact-item highlight">
+                <div class="fact-icon">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <div class="fact-text">
+                    <h4>Efektivitas Pengobatan</h4>
+                    <p>Minum obat secara teratur bisa meningkatkan efektivitas pengobatan hingga 80% dibandingkan dengan penggunaan yang tidak teratur.</p>
+                </div>
+            </div>
+            <div class="fact-item">
+                <div class="fact-icon">
+                    <i class="fas fa-globe-asia"></i>
+                </div>
+                <div class="fact-text">
+                    <h4>Masalah Global</h4>
+                    <p>WHO menyatakan kurang patuh minum obat adalah masalah kesehatan global yang mempengaruhi 50% pasien penyakit kronis.</p>
+                </div>
+            </div>
+            <div class="fact-image">
+                <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Medical Fact">
+                <div class="image-caption">Kepatuhan pengobatan meningkatkan hasil kesehatan</div>
+            </div>
+        </div>
+    </div>
+    <div class="container" id="formPage">
+        <form id="userForm" class="card input-card">
+          <h2><i class="fas fa-user-plus"></i> Data Pengguna</h2>
+          <div class="form-group">
+            <label for="name">Nama Lengkap</label>
+            <input type="text" id="name" placeholder="Masukkan Nama" required />
+          </div>
+          <div class="form-group">
+            <label for="bellyId">ID BellyPlus</label>
+            <input type="text" id="bellyId" placeholder="Contoh: BP-XXXXXX" required />
+          </div>
+          <button type="submit"><i class="fas fa-bell"></i>Masuk</button>
+          <button type="button" onclick="document.getElementById('formPage').style.display='none'">Tutup</button>
+        </form>
+      </div>
+</div>
+  <script src="../js/navlink.js"></script>
+  <script src="../js/readdata.js"></script>
+  <script>
+        function setAvatarImage(name) {
+            const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=26a69a&color=fff&rounded=true&size=40`;
+            document.getElementById('user-avatar').src = avatarUrl;
+        }
+    </script>
+</body>
+</html>
