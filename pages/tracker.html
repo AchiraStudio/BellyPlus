@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BellyPlus - Pelacak Pertumbuhan Bayi</title>
+  <link rel="stylesheet" href="../css/style-tracker.css" />
+  <link rel="stylesheet" href="../css/profile-acc.css">
+  <script src="../js/tracker.js" defer></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Nav -->
+    <div class="navbar">
+        <div class="logo">
+            <h1 class="main-text first">Belly</h1>
+            <h1 class="main-text second">Plus</h1>
+        </div>
+        <div class="search" style="width: 300px;">
+            <input type="text" placeholder="Cari..." class="search-input" style="width: 300px;" />
+        </div>
+        <div class="acc" id="acc-desktop">
+            <div class="button log-in">Masuk</div>
+            <div class="button sign-in">Daftar</div>
+        </div>
+        <div class="burger" id="burger">
+            <svg width="30" height="30" viewBox="0 0 100 80" fill="black">
+                <rect width="100" height="15" rx="8"></rect>
+                <rect y="30" width="100" height="15" rx="8"></rect>
+                <rect y="60" width="100" height="15" rx="8"></rect>
+            </svg>
+        </div>
+    </div>
+    
+    <nav class="nav-links" id="nav-links">
+        <div class="burger" id="burger-close">
+            <svg width="30" height="30" viewBox="0 0 100 80" fill="black">
+                <rect width="100" height="15" rx="8"></rect>
+                <rect y="30" width="100" height="15" rx="8"></rect>
+                <rect y="60" width="100" height="15" rx="8"></rect>
+            </svg>
+        </div>
+        <a href="../index.html">Beranda</a>
+        <a href="#features">Fitur-Fitur</a>
+        <a href="#">Layanan</a>
+        <a href="#">Kontak</a>
+        <div class="acc android" id="acc-mobile">
+            <div class="button log-in">Masuk</div>
+            <div class="button sign-in">Daftar</div>
+        </div>
+    </nav>
+    <!-- End Nav -->
+
+    <div class="app-container">
+        <header class="app-header">
+            <div class="logo-container">
+                <i class="fas fa-baby-carriage logo-icon"></i>
+                <h1 class="title"><span>Belly</span>Plus <span class="subtitle">Pelacak Pertumbuhan Bayi</span></h1>
+            </div>
+            <div class="user-info">
+                <i class="fas fa-user-circle"></i>
+                <span>Dasbor Orang Tua</span>
+            </div>
+        </header>
+        
+        <div class="card-container">
+            <!-- Card 1: Input Baby ID -->
+            <div class="card input-card">
+                <div class="card-header">
+                    <i class="fas fa-baby card-icon"></i>
+                    <h2>Lacak Bayi Anda</h2>
+                </div>
+                <div class="card-content">
+                    <p class="card-intro">Gunakan ID BellyPlus anda untuk melihat perkembangan bayi anda sekarang juga!</p>
+                    
+                    <div class="input-group">
+                        <label for="babyId">ID BellyPlus</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-id-card"></i>
+                            <input type="text" id="babyId" placeholder="BP-123456" />
+                        </div>
+                    </div>
+                    
+                    <button class="primary-btn" onclick="loadBabyData()">
+                        <i class="fas fa-search"></i> Lacak Bayi
+                    </button>
+                    
+                    <div class="qr-option">
+                        <div class="divider">
+                            <span>ATAU</span>
+                        </div>
+                        <button class="secondary-btn">
+                            <i class="fas fa-qrcode"></i> Pindai Kode QR
+                        </button>
+                    </div>
+                    
+                    <div class="support-links">
+                        <a href="#"><i class="fas fa-question-circle"></i> Kesulitan mencari ID Anda?</a>
+                        <a href="#"><i class="fas fa-plus-circle"></i> Daftarkan bayi Anda</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: Baby Info -->
+            <div class="card info-card" id="babyInfo">
+                <div class="card-header">
+                    <i class="fas fa-child card-icon"></i>
+                    <h2>Profil Bayi</h2>
+                    <div class="badge premium-badge">Premium</div>
+                </div>
+                
+                <div class="baby-avatar">
+                    <div class="avatar-placeholder">
+                        <i class="fas fa-smile"></i>
+                    </div>
+                    <div class="baby-basic-info">
+                        <h3 id="babyName">Nama Bayi</h3>
+                        <div class="baby-meta">
+                            <span><i class="fas fa-birthday-cake"></i> <span id="babyAge">3 bulan</span></span>
+                            <span><i class="fas fa-ruler-vertical"></i> <span id="babyHeight">62 cm</span></span>
+                            <span><i class="fas fa-weight"></i> <span id="babyWeight">6.2 kg</span></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-header">
+                        <h4>Progres Perkembangan</h4>
+                        <span id="babyStatus">Sangat Baik</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 85%"></div>
+                    </div>
+                    <div class="progress-stats">
+                        <div>
+                            <span>Pencapaian</span>
+                            <strong>8/10</strong>
+                        </div>
+                        <div>
+                            <span>Pertumbuhan</span>
+                            <strong>90%</strong>
+                        </div>
+                        <div>
+                            <span>Vaksin</span>
+                            <strong>3/4</strong>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tips-section">
+                    <div class="section-header">
+                        <i class="fas fa-lightbulb"></i>
+                        <h4>Tips Perawatan Pribadi</h4>
+                    </div>
+                    <ul id="babyTips">
+                        <li><i class="fas fa-check-circle"></i> Tambahkan tummy time menjadi 15 menit setiap hari</li>
+                        <li><i class="fas fa-check-circle"></i> Coba perkenalkan sereal satu jenis</li>
+                        <li><i class="fas fa-check-circle"></i> Jadwalkan pemeriksaan usia 4 bulan</li>
+                        <li><i class="fas fa-check-circle"></i> Latih bayi mengikuti benda dengan mata</li>
+                    </ul>
+                </div>
+                
+                <button class="text-btn">
+                    <i class="fas fa-chart-line"></i> Lihat Grafik Pertumbuhan Lengkap
+                </button>
+            </div>
+
+            <!-- Card 3: Weekly Tracker -->
+            <div class="card tracker-card">
+                <div class="card-header">
+                    <i class="fas fa-calendar-week card-icon"></i>
+                    <h2>Perkembangan Mingguan</h2>
+                </div>
+                
+                <div class="week-selector">
+                    <label for="weekRange">Minggu <span id="currentWeek">12</span></label>
+                    <div class="week-nav">
+                        <button class="icon-btn" onclick="changeWeek(-1)">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <input type="range" id="weekRange" min="1" max="40" value="12" oninput="updateWeek()"/>
+                        <button class="icon-btn" onclick="changeWeek(1)">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="week-highlights">
+                    <div class="highlight">
+                        <i class="fas fa-brain"></i>
+                        <span>Kognitif: Mengikuti benda</span>
+                    </div>
+                    <div class="highlight">
+                        <i class="fas fa-hand-paper"></i>
+                        <span>Motorik: Menggenggam benda</span>
+                    </div>
+                    <div class="highlight">
+                        <i class="fas fa-comment-dots"></i>
+                        <span>Berbicara: Mengeluarkan suara cooing</span>
+                    </div>
+                </div>
+                
+                <div class="week-description" id="weekDescription">
+                    <h4>Apa yang Diharapkan Minggu Ini</h4>
+                    <p>Bayi Anda mulai lebih sosial, tersenyum pada wajah yang dikenali dan mungkin mulai tertawa. Mereka mulai dapat mengontrol kepala lebih baik saat tummy time dan mungkin mulai mendorong tubuh dengan lengan. Banyak bayi mulai bisa berguling dari perut ke punggung pada waktu ini.</p>
+                    
+                    <div class="milestone-checklist">
+                        <h5>Pencapaian Minggu Ini</h5>
+                        <div class="milestone checked">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Mengikuti benda dengan mata</span>
+                        </div>
+                        <div class="milestone checked">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Menahan kepala dengan stabil</span>
+                        </div>
+                        <div class="milestone">
+                            <i class="far fa-circle"></i>
+                            <span>Berguling dari perut ke punggung</span>
+                        </div>
+                        <div class="milestone">
+                            <i class="far fa-circle"></i>
+                            <span>Menahan berat badan di kaki</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="activity-suggestions">
+                    <h4>Kegiatan yang Disarankan</h4>
+                    <div class="activity">
+                        <i class="fas fa-music"></i>
+                        <div>
+                            <strong>Nyanyikan lagu anak-anak</strong>
+                            <span>Membantu perkembangan bahasa</span>
+                        </div>
+                    </div>
+                    <div class="activity">
+                        <i class="fas fa-mobile-alt"></i>
+                        <div>
+                            <strong>Gambar kontras tinggi</strong>
+                            <span>Menstimulasi perkembangan visual</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer class="app-footer">
+            <p>© 2025 BellyPlus. Semua data tersimpan dengan aman.</p>
+            <div class="footer-links">
+                <a href="#"><i class="fas fa-shield-alt"></i> Privasi</a>
+                <a href="#"><i class="fas fa-question"></i> Bantuan</a>
+                <!-- Add more links if needed -->
+            </div>
+        </footer>
+    </div>
+
+
+    <div class="container" id="formPage">
+        <form id="userForm" class="card input-card">
+          <h2><i class="fas fa-user-plus"></i> Data Pengguna</h2>
+          <div class="form-group">
+            <label for="name">Nama Lengkap</label>
+            <input type="text" id="name" placeholder="Masukkan Nama" required />
+          </div>
+          <div class="form-group">
+            <label for="bellyId">ID BellyPlus</label>
+            <input type="text" id="bellyId" placeholder="Contoh: BP-XXXXXX" required />
+          </div>
+          <button type="submit"><i class="fas fa-bell"></i>Masuk</button>
+          <button type="button" onclick="document.getElementById('formPage').style.display='none'">Tutup</button>
+        </form>
+    </div>
+    <script src="../js/navlink.js"></script>
+    <script src="../js/readdata.js"></script>
+</body>
+</html>

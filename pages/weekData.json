@@ -1,0 +1,338 @@
+{
+  "1": {
+    "highlight": {
+      "cognitive": "Kognitif: Bayi baru lahir lebih banyak tidur dan hanya merespons rangsangan dasar seperti sentuhan dan suara.",
+      "motor": "Motorik: Refleks primitif seperti menggenggam dan rooting (mencari puting) sangat dominan.",
+      "speech": "Berbicara: Hanya menangis untuk berkomunikasi, terkadang mengeluarkan suara kecil seperti 'eh'."
+    },
+    "description": "Bayi baru lahir menghabiskan sebagian besar waktunya untuk tidur. Mereka mulai mengenali suara dan aroma ibu.",
+    "milestones": {
+      "achieved": [
+        "Mengisap dan menelan dengan baik",
+        "Merespons sentuhan dan suara keras"
+      ],
+      "pending": [
+        "Tersenyum sosial (belum tercapai)",
+        "Mengangkat kepala (belum tercapai)"
+      ]
+    },
+    "activities": [
+      {
+        "title": "Skin-to-skin contact",
+        "benefit": "Meningkatkan ikatan antara bayi dan orang tua serta menstabilkan detak jantung dan pernapasan bayi"
+      },
+      {
+        "title": "Berbicara dengan bayi",
+        "benefit": "Membantu bayi mulai mengenali suara orang tua"
+      }
+    ]
+  },
+  "2": {
+    "highlight": {
+      "cognitive": "Kognitif: Mulai mengenali wajah orang tua dalam jarak dekat (20-30 cm).",
+      "motor": "Motorik: Gerakan tangan dan kaki masih acak, tetapi lebih terkoordinasi dibanding minggu pertama.",
+      "speech": "Berbicara: Mulai mengeluarkan suara vokal kecil selain menangis."
+    },
+    "description": "Bayi mulai lebih sering terbangun dan periode waspada lebih panjang. Penglihatan perlahan mulai membaik.",
+    "milestones": {
+      "achieved": [
+        "Mengikuti objek dengan mata sebentar",
+        "Mengenali aroma ibu"
+      ],
+      "pending": [
+        "Tersenyum sosial (belum tercapai)",
+        "Mengangkat kepala 45 derajat (belum tercapai)"
+      ]
+    },
+    "activities": [
+      {
+        "title": "Tummy time singkat",
+        "benefit": "Menguatkan otot leher dan bahu"
+      },
+      {
+        "title": "Memperlihatkan wajah dengan ekspresi berbeda",
+        "benefit": "Merangsang perkembangan visual dan kognitif"
+      }
+    ]
+  },
+  "3": {
+    "highlight": {
+      "cognitive": "Kognitif: Mulai menunjukkan minat pada benda berwarna kontras tinggi.",
+      "motor": "Motorik: Mulai bisa mengangkat kepala sebentar saat tengkurap.",
+      "speech": "Berbicara: Mulai mengoceh dengan suara vokal ('aah', 'ooh')."
+    },
+    "description": "Bayi mulai memiliki periode waspada yang lebih lama dan mulai menunjukkan minat pada lingkungan sekitarnya.",
+    "milestones": {
+      "achieved": [
+        "Mengangkat kepala sebentar saat tengkurap",
+        "Merespons suara dengan diam atau menggerakkan tubuh"
+      ],
+      "pending": [
+        "Tersenyum sosial (belum tercapai)",
+        "Memegang mainan (belum tercapai)"
+      ]
+    },
+    "activities": [
+      {
+        "title": "Memperlihatkan mainan berwarna kontras",
+        "benefit": "Merangsang penglihatan dan koordinasi mata"
+      },
+      {
+        "title": "Bernyanyi untuk bayi",
+        "benefit": "Mengembangkan kemampuan mendengar dan berbahasa"
+      }
+    ]
+  },
+  "4": {
+    "highlight": {
+      "cognitive": "Kognitif: Mulai mengenali rutinitas sehari-hari seperti waktu makan.",
+      "motor": "Motorik: Gerakan lebih halus, bisa mengangkat kepala hingga 45 derajat saat tengkurap.",
+      "speech": "Berbicara: Mulai mengeluarkan suara cooing ('goo', 'gaa')."
+    },
+    "description": "Bayi mulai menunjukkan tanda-tanda pertama senyum sosial dan lebih responsif terhadap interaksi manusia.",
+    "milestones": {
+      "achieved": [
+        "Tersenyum sosial",
+        "Mengikuti objek dengan mata 180 derajat"
+      ],
+      "pending": [
+        "Berguling (belum tercapai)",
+        "Memegang benda dengan kuat (belum tercapai)"
+      ]
+    },
+    "activities": [
+      {
+        "title": "Bermain cilukba sederhana",
+        "benefit": "Mengembangkan kesadaran objek permanen"
+      },
+      {
+        "title": "Merangsang genggaman dengan mainan ringan",
+        "benefit": "Melatih kekuatan dan koordinasi tangan"
+      }
+    ]
+  },
+  "5": {
+    "highlight": {
+      "cognitive": "Kognitif: Mulai tertarik pada mainan dan mencoba meraihnya.",
+      "motor": "Motorik: Bisa menahan kepala lebih stabil saat digendong tegak.",
+      "speech": "Berbicara: Mengeluarkan lebih banyak variasi suara cooing."
+    },
+    "description": "Bayi menjadi lebih interaktif dan mulai menunjukkan ekspresi wajah yang lebih bervariasi.",
+    "milestones": {
+      "achieved": [
+        "Mengangkat kepala 45 derajat saat tengkurap",
+        "Merespons dengan suara ketika diajak bicara"
+      ],
+      "pending": [
+        "Berguling (belum tercapai)",
+        "Memindahkan benda dari satu tangan ke tangan lain (belum tercapai)"
+      ]
+    },
+    "activities": [
+      {
+        "title": "Menggantung mainan di atas boks",
+        "benefit": "Merangsang bayi untuk meraih dan melatih koordinasi mata-tangan"
+      },
+      {
+        "title": "Membacakan buku dengan gambar besar",
+        "benefit": "Mengembangkan kemampuan bahasa dan visual"
+      }
+    ]
+  },
+  "6": {
+    "highlight": {
+      "cognitive": "Kognitif: Mulai memahami sebab-akibat sederhana (misal: menangis akan mendapat respons).",
+      "motor": "Motorik: Mulai bisa berguling dari perut ke punggung.",
+      "speech": "Berbicara: Menggabungkan vokal dan konsonan ('ba', 'ma')."
+    },
+    "description": "Bayi mulai menunjukkan kepribadian yang lebih jelas dan lebih tertarik pada dunia sekitarnya.",
+    "milestones": {
+      "achieved": [
+        "Berguling dari perut ke punggung",
+        "Tertawa kecil"
+      ],
+      "pending": [
+        "Duduk tanpa bantuan (belum tercapai)",
+        "Merangkak (belum tercapai)"
+      ]
+    },
+    "activities": [
+      {
+        "title": "Memberikan mainan yang berbunyi",
+        "benefit": "Mengajarkan konsep sebab-akibat"
+      },
+      {
+        "title": "Tummy time lebih lama",
+        "benefit": "Menguatkan otot untuk merangkak nantinya"
+      }
+    ]
+  },
+  "7": {
+    "highlight": {
+      "cognitive": "Kognitif: Mulai mengamati benda kecil dan detail.",
+      "motor": "Motorik: Bisa menahan berat badan di kaki saat dibantu berdiri.",
+      "speech": "Berbicara: Mengulangi suku kata sederhana ('ma-ma', 'da-da')."
+    },
+    "description": "Bayi menjadi lebih kuat secara fisik dan mulai menunjukkan preferensi terhadap orang atau mainan tertentu.",
+    "milestones": {
+      "achieved": [
+        "Memegang benda dengan kedua tangan",
+        "Mengenali orang familiar"
+      ],
+      "pending": [
+        "Duduk tanpa bantuan (belum tercapai)",
+        "Merangkak (belum tercapai)"
+      ]
+    },
+    "activities": [
+      {
+        "title": "Bermain dengan cermin bayi",
+        "benefit": "Mengembangkan kesadaran diri"
+      },
+      {
+        "title": "Latihan duduk dengan penyangga",
+        "benefit": "Melatih keseimbangan dan kekuatan otot punggung"
+      }
+    ]
+  },
+  "8": {
+    "highlight": {
+      "cognitive": "Kognitif: Mulai mencari benda yang hilang dari pandangan.",
+      "motor": "Motorik: Bisa duduk dengan bantuan atau penyangga.",
+      "speech": "Berbicara: Mengoceh dengan intonasi seperti berbicara."
+    },
+    "description": "Bayi mulai menunjukkan keingintahuan yang lebih besar dan lebih terampil menggunakan tangan.",
+    "milestones": {
+      "achieved": [
+        "Memindahkan benda dari satu tangan ke tangan lain",
+        "Bermain dengan kaki"
+      ],
+      "pending": [
+        "Merangkak (belum tercapai)",
+        "Berdiri dengan berpegangan (belum tercapai)"
+      ]
+    },
+    "activities": [
+      {
+        "title": "Bermain cilukba dengan benda",
+        "benefit": "Mengembangkan pemahaman objek permanen"
+      },
+      {
+        "title": "Memberikan finger food",
+        "benefit": "Melatih koordinasi tangan-mulut"
+      }
+    ]
+  },
+  "9": {
+    "highlight": {
+      "cognitive": "Kognitif: Memahami kata-kata sederhana seperti 'tidak' dari intonasi.",
+      "motor": "Motorik: Mulai merangkak atau bergerak dengan perut.",
+      "speech": "Berbicara: Mengombinasikan suara lebih bervariasi."
+    },
+    "description": "Bayi menjadi lebih mobile dan mulai mengeksplorasi lingkungan sekitarnya dengan aktif.",
+    "milestones": {
+      "achieved": [
+        "Merangkak atau bergerak dengan perut",
+        "Menepuk-nepuk tangan"
+      ],
+      "pending": [
+        "Berdiri dengan berpegangan (belum tercapai)",
+        "Mengucapkan kata pertama (belum tercapai)"
+      ]
+    },
+    "activities": [
+      {
+        "title": "Membuat rintangan merangkak",
+        "benefit": "Melatih keterampilan motorik kasar"
+      },
+      {
+        "title": "Membacakan buku dengan tekstur",
+        "benefit": "Merangsang indera peraba dan penglihatan"
+      }
+    ]
+  },
+  "10": {
+    "highlight": {
+      "cognitive": "Kognitif: Mulai meniru gerakan dan ekspresi wajah.",
+      "motor": "Motorik: Bisa duduk tanpa bantuan untuk waktu yang lebih lama.",
+      "speech": "Berbicara: Menggunakan gerakan untuk berkomunikasi seperti mengangkat tangan minta digendong."
+    },
+    "description": "Bayi mulai menunjukkan pemahaman yang lebih baik tentang bahasa tubuh dan ekspresi wajah orang lain.",
+    "milestones": {
+      "achieved": [
+        "Duduk tanpa bantuan",
+        "Menanggapi nama sendiri"
+      ],
+      "pending": [
+        "Berdiri dengan berpegangan (belum tercapai)",
+        "Mengucapkan kata pertama (belum tercapai)"
+      ]
+    },
+    "activities": [
+      {
+        "title": "Bermain tepuk tangan",
+        "benefit": "Melatih koordinasi dan meniru gerakan"
+      },
+      {
+        "title": "Mengenalkan cangkir sippy",
+        "benefit": "Melatih keterampilan minum mandiri"
+      }
+    ]
+  },
+  "11": {
+    "highlight": {
+      "cognitive": "Kognitif: Mulai memahami konsep 'di dalam' dan 'di luar'.",
+      "motor": "Motorik: Mulai merambat sambil berpegangan pada furnitur.",
+      "speech": "Berbicara: Mengucapkan 'mama' atau 'dada' tanpa makna spesifik."
+    },
+    "description": "Bayi menjadi lebih mandiri dalam bermain dan mulai menunjukkan preferensi yang jelas.",
+    "milestones": {
+      "achieved": [
+        "Merambat sambil berpegangan",
+        "Mengambil benda kecil dengan jempol dan telunjuk"
+      ],
+      "pending": [
+        "Berjalan beberapa langkah (belum tercapai)",
+        "Mengucapkan kata dengan makna (belum tercapai)"
+      ]
+    },
+    "activities": [
+      {
+        "title": "Bermain memasukkan dan mengeluarkan benda",
+        "benefit": "Melatih pemahaman spasial dan koordinasi"
+      },
+      {
+        "title": "Mengajak bernyanyi dengan gerakan",
+        "benefit": "Mengembangkan bahasa dan motorik"
+      }
+    ]
+  },
+  "12": {
+    "highlight": {
+      "cognitive": "Kognitif: Memahami perintah sederhana seperti 'tepuk tangan'.",
+      "motor": "Motorik: Mungkin bisa berdiri sebentar tanpa berpegangan.",
+      "speech": "Berbicara: Mengucapkan 1-2 kata dengan makna."
+    },
+    "description": "Bayi merayakan ulang tahun pertama dengan banyak pencapaian perkembangan yang signifikan.",
+    "milestones": {
+      "achieved": [
+        "Mengucapkan kata pertama",
+        "Berdiri tanpa berpegangan sebentar"
+      ],
+      "pending": [
+        "Berjalan lancar (belum tercapai)",
+        "Mengucapkan 3-5 kata (belum tercapai)"
+      ]
+    },
+    "activities": [
+      {
+        "title": "Bermain dorong-dorongan mainan",
+        "benefit": "Melatih keseimbangan untuk berjalan"
+      },
+      {
+        "title": "Membacakan buku dengan kata-kata sederhana",
+        "benefit": "Memperkaya kosakata"
+      }
+    ]
+  }
+}

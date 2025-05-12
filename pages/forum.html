@@ -1,14 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forum - BellyPlus</title>
     <link rel="stylesheet" href="../css/profile-acc.css">
     <link rel="stylesheet" href="../css/style-forum.css">
+    <style>
+        /* Typing Animation Styles */
+        .typing-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 8px 12px;
+            background: #f1f1f1;
+            border-radius: 18px;
+        }
+        
+        .typing-indicator span {
+            height: 8px;
+            width: 8px;
+            background: #26a69a;
+            border-radius: 50%;
+            display: inline-block;
+            animation: bounce 1.5s infinite ease-in-out;
+        }
+        
+        .typing-indicator span:nth-child(1) {
+            animation-delay: 0s;
+        }
+        
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes bounce {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-5px); }
+        }
+        
+        /* Message Bubble Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .message-bubble {
+            animation: fadeIn 0.3s ease-out;
+        }
+    </style>
 </head>
 <body>
-    <!-- Ignore This -->
+    <!-- Navbar & Navigation -->
     <div class="navbar">
         <div class="logo">
             <h1 class="main-text first">Belly</h1>
@@ -37,7 +84,7 @@
                 <rect y="60" width="100" height="15" rx="8"></rect>
             </svg>
         </div>
-        <a href="#top">Home</a>
+        <a href="../index.html">Home</a>
         <a href="#features">Fitur-Fitur</a>
         <a href="#">Services</a>
         <a href="#">Contact</a>
@@ -46,7 +93,7 @@
             <div class="button sign-in">Daftar</div>
         </div>
     </nav>
-    <!-- Ignore This -->
+
     <div class="box-hider"></div>
 
     <!-- Main Forum -->
@@ -54,62 +101,54 @@
         <div class="profile">
             <div class="acc"></div>
             <div class="chat-menu">
-                <div class="chat-container main-forum" data-title="Forum" data-id="forum">
-                    <img src="https://via.placeholder.com/40" class="avatar" />
+                <div class="chat-container doctor1" data-title="Dr. Denis" data-id="doctor1">
+                    <img src="https://via.placeholder.com/40" class="avatar" alt="Dr. Denis" />
+                    <div class="contact-name">Dr. Denis</div>
+                </div>
+                <div class="chat-container doctor2" data-title="Dr. Samantha" data-id="doctor2">
+                    <img src="https://via.placeholder.com/40" class="avatar" alt="Dr. Samantha" />
+                    <div class="contact-name">Dr. Samantha</div>
+                </div>
+                <div class="chat-container doctor3" data-title="Dr. Asep" data-id="doctor3">
+                    <img src="https://via.placeholder.com/40" class="avatar" alt="Dr. Asep" />
+                    <div class="contact-name">Dr. Asep</div>
+                </div>
+                <!-- <div class="chat-container forum" data-title="Forum" data-id="forum">
+                    <img src="https://via.placeholder.com/40" class="avatar" alt="Forum" />
                     <div class="contact-name">Forum</div>
-                </div>
-                <div class="chat-container doctor1" data-title="Doctor 1" data-id="doctor1">
-                    <img src="https://via.placeholder.com/40" class="avatar" />
-                    <div class="contact-name">Doctor 1</div>
-                </div>
-                <div class="chat-container doctor2" data-title="Doctor 2" data-id="doctor2">
-                    <img src="https://via.placeholder.com/40" class="avatar" />
-                    <div class="contact-name">Doctor 2</div>
-                </div>
-                <div class="chat-container doctor3" data-title="Doctor 3" data-id="doctor3">
-                    <img src="https://via.placeholder.com/40" class="avatar" />
-                    <div class="contact-name">Doctor 3</div>
-                </div>
+                </div> -->
             </div>
-        <button id="clearChatBtn">Clear Chat</button>
-
+            <button id="clearChatBtn">Clear Chat</button>
         </div>
 
         <div class="chat-box">
-            <div class="title">Select a chat</div>
+            <div class="title">Pilih Obrolan</div>
             <div class="messages"></div>
             <div class="message-input">
-            <input type="text" id="messageInput" placeholder="Type your message..." />
-            <button id="sendMessage">Send</button>
+                <input type="text" id="messageInput" placeholder="Ketik pesanmu..." />
+                <button id="sendMessage">Kirim</button>
             </div>
         </div>
     </div>
-    <!-- End Forum -->
 
-
-    <!-- Ignore This -->
+    <!-- User Form -->
     <div class="container" id="formPage">
         <form id="userForm" class="card input-card">
-          <h2><i class="fas fa-user-plus"></i> Data Pengguna</h2>
-          <div class="form-group">
-            <label for="name">Nama Lengkap</label>
-            <input type="text" id="name" placeholder="Masukkan Nama" required />
-          </div>
-          <div class="form-group">
-            <label for="bellyId">ID BellyPlus</label>
-            <input type="text" id="bellyId" placeholder="Contoh: BP-XXXXXX" required />
-          </div>
-          <button type="submit"><i class="fas fa-bell"></i>Masuk</button>
-          <button type="button" onclick="document.getElementById('formPage').style.display='none'">Tutup</button>
+            <h2><i class="fas fa-user-plus"></i> Data Pengguna</h2>
+            <div class="form-group">
+                <label for="name">Nama Lengkap</label>
+                <input type="text" id="name" placeholder="Masukkan Nama" required />
+            </div>
+            <div class="form-group">
+                <label for="bellyId">ID BellyPlus</label>
+                <input type="text" id="bellyId" placeholder="Contoh: BP-XXXXXX" required />
+            </div>
+            <button type="submit"><i class="fas fa-bell"></i>Masuk</button>
+            <button type="button" onclick="document.getElementById('formPage').style.display='none'">Tutup</button>
         </form>
     </div>
 
-    <!-- Ignore This -->
-    <script src="../js/navlink.js"></script>
-    <script src="../js/chat-bot.js"></script>
-    <script src="../js/readdata.js"></script>
     <script>
-        // Select elements
         const chatContainers = document.querySelectorAll('.chat-container');
         const title = document.querySelector('.chat-box .title');
         const messagesContainer = document.querySelector('.messages');
@@ -117,73 +156,30 @@
         const sendMessageButton = document.querySelector('#sendMessage');
 
         let currentChatId = null;
-
-        // Load stored messages or init object
         let chatMessages = JSON.parse(localStorage.getItem('chatMessages')) || {};
 
-        // Load messages into the UI
+        const doctorPrompts = {
+            doctor1: "Anda adalah Dr. Denis, seorang dokter umum yang peduli dan berpengetahuan luas. Anda memberikan nasihat dengan cara yang baik, profesional, dan penuh empati. Anda selalu meluangkan waktu untuk menjelaskan dengan jelas kepada pasien. Dan anda mengetik dengan aksen sulawesi. Tolong hiraukan kata-kata ekspresif yang menggunakan tanda kurung. Dan kalau bisa usahakan ketik yang pendek saja, 1-10 kata. Jika perlu lebih, maka lebih saja.",
+            doctor2: "Anda adalah Dr. Samantha, seorang ahli gizi yang ramah dan mudah didekati. Nada bicara Anda lembut, dan Anda selalu mendorong pasien untuk menjaga kesehatan mereka dengan nasihat yang praktis. Anda mengetik dengan aksen Jaksel, jadi mencampurkan indonesia modern dengan sedikit inggris. Tolong hiraukan kata-kata ekspresif yang menggunakan tanda kurung. Dan kalau bisa usahakan ketik yang pendek saja, 1-10 kata. Jika perlu lebih, maka lebih saja.",
+            doctor3: "Anda adalah Dr. Asep, seorang ahli pengobatan holistik. Anda lebih memilih pengobatan alami dan pendekatan yang tenang serta menenangkan. Nasihat Anda selalu mempertimbangkan kesehatan secara keseluruhan, termasuk kesehatan mental dan emosional. Anda mengetik dengan aksen orang jawa, jadi kadang-kadang menggunakan kosa kata jawa. Tolong hiraukan kata-kata ekspresif yang menggunakan tanda kurung. Dan kalau bisa usahakan ketik yang pendek saja, 1-10 kata. Jika perlu lebih, maka lebih saja."
+        };
+
         function loadMessages(chatId) {
             messagesContainer.innerHTML = '';
             const msgs = chatMessages[chatId] || [];
-            msgs.forEach(msg => {
-                const bubble = document.createElement('div');
-                bubble.classList.add('message-bubble');
-
-                bubble.innerHTML = `
-                    <div class="message-header">
-                        <img src="${msg.avatar}" alt="Avatar" class="bubble-avatar">
-                        <div class="bubble-info">
-                            <div class="bubble-name">${msg.name}</div>
-                            <div class="bubble-text">${msg.text}</div>
-                        </div>
-                    </div>
-                `;
-                messagesContainer.appendChild(bubble);
-            });
+            msgs.forEach(msg => appendMessage(msg));
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
 
-        // Handle chat selection
-        chatContainers.forEach(container => {
-            container.addEventListener('click', () => {
-                const chatId = container.dataset.id;
-                const chatTitle = container.dataset.title;
-
-                currentChatId = chatId;
-                title.textContent = chatTitle;
-
-                loadMessages(chatId);
-                messageInput.value = '';
-            });
-        });
-
-        // Send message function
-        function sendMessage(text) {
-            if (!currentChatId || !text.trim()) return;
-
-            const userData = JSON.parse(localStorage.getItem('userFormData')) || { name: "Anonymous", bellyId: "0000" };
-            const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(userData.name)}&background=26a69a&color=fff&rounded=true&size=40`;
-
-            const msg = {
-                text: text,
-                name: userData.name,
-                avatar: avatarUrl
-            };
-
-            // Save to localStorage
-            if (!chatMessages[currentChatId]) chatMessages[currentChatId] = [];
-            chatMessages[currentChatId].push(msg);
-            localStorage.setItem('chatMessages', JSON.stringify(chatMessages));
-
-            // Append to UI
+        function appendMessage(msg) {
             const bubble = document.createElement('div');
             bubble.classList.add('message-bubble');
             bubble.innerHTML = `
                 <div class="message-header">
-                    <img src="${avatarUrl}" alt="Avatar" class="bubble-avatar">
+                    <img src="${msg.avatar}" alt="${msg.name}" class="bubble-avatar">
                     <div class="bubble-info">
-                        <div class="bubble-name">${userData.name}</div>
-                        <div class="bubble-text">${text}</div>
+                        <div class="bubble-name">${msg.name}</div>
+                        <div class="bubble-text">${msg.text}</div>
                     </div>
                 </div>
             `;
@@ -191,36 +187,136 @@
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
 
-        // Send button handler
-        sendMessageButton.addEventListener('click', () => {
-            const message = messageInput.value.trim();
-            if (message) {
-                sendMessage(message);
-                messageInput.value = '';
-            }
-        });
-
-        // Send on Enter key press
-        messageInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault(); // Prevent newline
-                const message = messageInput.value.trim();
-                if (message) {
-                    sendMessage(message);
-                    messageInput.value = '';
+        function typeText(element, text, delay = 30) {
+            let i = 0;
+            element.innerHTML = '';
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, delay);
                 }
             }
-        });
-        const clearChatButton = document.getElementById('clearChatBtn');
+            type();
+        }
 
-        clearChatButton.addEventListener('click', () => {
-            if (!currentChatId) return;
-            if (confirm("Are you sure you want to clear this chat?")) {
-                chatMessages[currentChatId] = [];
+        chatContainers.forEach(container => {
+            container.addEventListener('click', () => {
+                const chatId = container.dataset.id;
+                const chatTitle = container.dataset.title;
+                currentChatId = chatId;
+                title.textContent = chatTitle;
+                loadMessages(chatId);
+                messageInput.value = '';
+                messageInput.focus();
+            });
+        });
+
+        sendMessageButton.addEventListener('click', async () => {
+            const message = messageInput.value.trim();
+            if (!currentChatId || !message) return;
+
+            // Disable input while sending
+            messageInput.disabled = true;
+            sendMessageButton.disabled = true;
+            sendMessageButton.textContent = 'Mengirim...';
+
+            const userData = JSON.parse(localStorage.getItem('userFormData')) || { name: "Anonymous", bellyId: "0000" };
+            const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(userData.name)}&background=26a69a&color=fff&rounded=true&size=40`;
+            const msg = { text: message, name: userData.name, avatar: avatarUrl };
+
+            if (!chatMessages[currentChatId]) chatMessages[currentChatId] = [];
+            chatMessages[currentChatId].push(msg);
+            localStorage.setItem('chatMessages', JSON.stringify(chatMessages));
+
+            appendMessage(msg);
+            messageInput.value = '';
+
+            // Show typing indicator
+            const botName = currentChatId === 'doctor1' ? "Dr. Denis" : 
+                           currentChatId === 'doctor2' ? "Dr. Samantha" : "Dr. Asep";
+            
+            const typingBubble = document.createElement('div');
+            typingBubble.classList.add('message-bubble');
+            typingBubble.innerHTML = `
+                <div class="message-header">
+                    <img src="https://via.placeholder.com/40" alt="${botName}" class="bubble-avatar" />
+                    <div class="bubble-info">
+                        <div class="bubble-name">${botName}</div>
+                        <div class="typing-indicator">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            messagesContainer.appendChild(typingBubble);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            try {
+                const response = await fetch("https://ocelot-driven-panther.ngrok-free.app/chat", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        prompt: doctorPrompts[currentChatId] + "\n" + message,
+                        chat_id: currentChatId
+                    })
+                });
+                
+                const data = await response.json();
+                const reply = data.response || "(Tidak ada respon)";
+
+                // Replace typing indicator with actual message
+                typingBubble.querySelector('.bubble-info').innerHTML = `
+                    <div class="bubble-name">${botName}</div>
+                    <div class="bubble-text"></div>
+                `;
+                
+                const replyElement = typingBubble.querySelector('.bubble-text');
+                typeText(replyElement, reply);
+
+                chatMessages[currentChatId].push({ text: reply, name: botName, avatar: "https://via.placeholder.com/40" });
                 localStorage.setItem('chatMessages', JSON.stringify(chatMessages));
-                messagesContainer.innerHTML = '';
+
+            } catch (error) {
+                console.error("Error:", error);
+                typingBubble.querySelector('.bubble-info').innerHTML = `
+                    <div class="bubble-name">${botName}</div>
+                    <div class="bubble-text">Maaf, terjadi kesalahan saat menghubungi AI.</div>
+                `;
+            } finally {
+                // Re-enable input
+                messageInput.disabled = false;
+                sendMessageButton.disabled = false;
+                sendMessageButton.textContent = 'Kirim';
+                messageInput.focus();
             }
         });
+
+        // Send message with Enter key
+        messageInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                sendMessageButton.click();
+            }
+        });
+
+        const clearChatButton = document.getElementById('clearChatBtn');
+        clearChatButton.addEventListener('click', () => {
+            if (!currentChatId) return;
+            if (confirm("Apakah Anda yakin ingin menghapus obrolan ini?")) {
+                chatMessages[currentChatId] = [];
+                localStorage.setItem('chatMessages', JSON.stringify(chatMessages));
+                loadMessages(currentChatId);
+            }
+        });
+
+        // Focus input when chat is selected
+        if (currentChatId) {
+            messageInput.focus();
+        }
     </script>
+    <script src="../js/navlink.js"></script>
+    <script src="../js/readdata.js"></script>
 </body>
 </html>

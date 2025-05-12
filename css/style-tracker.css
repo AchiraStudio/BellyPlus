@@ -1,0 +1,634 @@
+:root {
+  --primary-color: #8c062d;
+  --primary-light: #ffe9f0;
+  --secondary-color: #760021;
+  --accent-color: #ff4d88;
+  --text-color: #333;
+  --text-light: #666;
+  --border-color: #e0e0e0;
+  --success-color: #4caf50;
+  --warning-color: #ff9800;
+  --info-color: #2196f3;
+  --premium-color: #ffd700;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Quicksand', 'Poppins', sans-serif;
+  background: #fdf6f9;
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+.app-container {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: auto;
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2.5rem;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo-icon {
+  font-size: 2.5rem;
+  color: var(--primary-color);
+}
+
+.title {
+  margin: 0;
+  font-size: 2rem;
+  color: var(--secondary-color);
+  font-weight: 700;
+}
+
+.title span {
+  color: var(--primary-color);
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: var(--text-light);
+  font-weight: 400;
+  margin-left: 0.5rem;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+.user-info i {
+  font-size: 1.5rem;
+  color: var(--primary-color);
+}
+
+.card-container {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 3rem;
+}
+
+.card {
+  background: white;
+  flex: 1 1 320px;
+  min-width: 320px;
+  max-width: 420px;
+  padding: 1.5rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.card-header h2 {
+  margin: 0;
+  color: var(--primary-color);
+  font-size: 1.5rem;
+}
+
+.card-icon {
+  font-size: 1.5rem;
+  color: var(--primary-color);
+  background: var(--primary-light);
+  padding: 0.8rem;
+  border-radius: 50%;
+}
+
+.badge {
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: var(--premium-color);
+  color: #856404;
+  font-size: 0.7rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 1rem;
+  font-weight: 700;
+}
+
+.card-content {
+  flex: 1;
+}
+
+.card-intro {
+  color: var(--text-light);
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+}
+
+.input-group {
+  margin-bottom: 1.5rem;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--text-color);
+  font-size: 0.9rem;
+}
+
+.input-with-icon {
+  position: relative;
+}
+
+.input-with-icon i {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-light);
+}
+
+input[type="text"],
+input[type="range"] {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 2.5rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border-color);
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px var(--primary-light);
+}
+
+input[type="range"] {
+  padding: 0;
+  height: 8px;
+  -webkit-appearance: none;
+  background: #e0e0e0;
+  border-radius: 4px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  background: var(--primary-color);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+button {
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.primary-btn {
+  padding: 0.85rem 1.5rem;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  width: 100%;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.primary-btn:hover {
+  background: #a00438;
+  transform: translateY(-2px);
+}
+
+.secondary-btn {
+  padding: 0.75rem 1.5rem;
+  background: white;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.secondary-btn:hover {
+  background: var(--primary-light);
+}
+
+.text-btn {
+  padding: 0.5rem;
+  background: transparent;
+  color: var(--primary-color);
+  border: none;
+  font-size: 0.9rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.text-btn:hover {
+  text-decoration: underline;
+}
+
+.icon-btn {
+  padding: 0.5rem;
+  background: transparent;
+  color: var(--primary-color);
+  border: none;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-btn:hover {
+  background: var(--primary-light);
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 1.5rem 0;
+  color: var(--text-light);
+  font-size: 0.8rem;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.divider::before {
+  margin-right: 0.5rem;
+}
+
+.divider::after {
+  margin-left: 0.5rem;
+}
+
+.support-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.support-links a {
+  color: var(--text-light);
+  font-size: 0.85rem;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.support-links a:hover {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
+/* Baby Info Card Styles */
+.baby-avatar {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.avatar-placeholder {
+  width: 70px;
+  height: 70px;
+  background: var(--primary-light);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: var(--primary-color);
+}
+
+.baby-basic-info h3 {
+  margin: 0;
+  color: var(--text-color);
+  font-size: 1.3rem;
+}
+
+.baby-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--text-light);
+}
+
+.baby-meta span {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.progress-container {
+  margin-bottom: 1.5rem;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.progress-header h4 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.progress-header span {
+  font-weight: 600;
+  color: var(--success-color);
+}
+
+.progress-bar {
+  height: 8px;
+  background: #e0e0e0;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--success-color);
+  border-radius: 4px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+}
+
+.progress-stats div {
+  text-align: center;
+}
+
+.progress-stats span {
+  display: block;
+  color: var(--text-light);
+  font-size: 0.75rem;
+}
+
+.progress-stats strong {
+  color: var(--text-color);
+  font-size: 1rem;
+}
+
+.tips-section {
+  margin-top: 1.5rem;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.section-header h4 {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--text-color);
+}
+
+.section-header i {
+  color: var(--accent-color);
+}
+
+#babyTips {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#babyTips li {
+  padding: 0.5rem 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+#babyTips li i {
+  color: var(--success-color);
+  margin-top: 0.2rem;
+}
+
+/* Weekly Tracker Card Styles */
+.week-selector {
+  margin-bottom: 1.5rem;
+}
+
+.week-selector label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.week-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.week-highlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.highlight {
+  flex: 1 1 100px;
+  background: var(--primary-light);
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+}
+
+.highlight i {
+  color: var(--primary-color);
+}
+
+.week-description {
+  margin-bottom: 1.5rem;
+}
+
+.week-description h4 {
+  margin-top: 0;
+  color: var(--primary-color);
+  font-size: 1.1rem;
+}
+
+.week-description p {
+  font-size: 0.9rem;
+  color: var(--text-color);
+}
+
+.milestone-checklist {
+  margin-top: 1rem;
+}
+
+.milestone-checklist h5 {
+  margin: 1rem 0 0.5rem;
+  font-size: 0.9rem;
+  color: var(--text-light);
+}
+
+.milestone {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+  font-size: 0.9rem;
+}
+
+.milestone.checked {
+  color: var(--text-light);
+}
+
+.milestone.checked i {
+  color: var(--success-color);
+}
+
+.milestone i {
+  color: var(--border-color);
+}
+
+.activity-suggestions {
+  margin-top: 1.5rem;
+}
+
+.activity-suggestions h4 {
+  margin-top: 0;
+  color: var(--primary-color);
+  font-size: 1.1rem;
+}
+
+.activity {
+  display: flex;
+  gap: 1rem;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.activity:last-child {
+  border-bottom: none;
+}
+
+.activity i {
+  font-size: 1.2rem;
+  color: var(--primary-color);
+  margin-top: 0.2rem;
+}
+
+.activity div {
+  flex: 1;
+}
+
+.activity strong {
+  display: block;
+  font-size: 0.95rem;
+}
+
+.activity span {
+  font-size: 0.85rem;
+  color: var(--text-light);
+}
+
+/* Footer Styles */
+.app-footer {
+  text-align: center;
+  padding: 1.5rem 0;
+  color: var(--text-light);
+  font-size: 0.85rem;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 0.8rem;
+}
+
+.footer-links a {
+  color: var(--text-light);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.footer-links a:hover {
+  color: var(--primary-color);
+}
+
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .app-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .user-info {
+    align-self: flex-end;
+  }
+  
+  .card {
+    min-width: 100%;
+  }
+}

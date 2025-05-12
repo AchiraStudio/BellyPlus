@@ -1,16 +1,102 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pregnancy Education - BellyPlus</title>
+    <title>Edukasi Kehamilan - BellyPlus</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/profile-acc.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-    </style>
-    <style>
-        .navbar {
-            translate: -5px;
+        /* Modern styling with Indonesian focus */
+        :root {
+            --purple: #8E44AD;
+            --red: #E74C3C;
+            --blue: #3498DB;
+            --dark: #2C3E50;
+            --gray: #95a5a6;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+        
+        .content-column {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .content-card {
+            margin-bottom: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .content-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        
+        .card-body {
+            padding: 15px;
+        }
+        
+        .card-title {
+            font-size: 1.1rem;
+            margin: 0 0 10px 0;
+            color: var(--purple);
+        }
+        
+        .card-text {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .card-button {
+            display: inline-block;
+            padding: 8px 15px;
+            background: var(--blue);
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 30px;
+            color: var(--purple);
+        }
+        
+        @media (max-width: 768px) {
+            .columns {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -21,35 +107,65 @@
             <h1 class="main-text second">Plus</h1>
         </div>
         <div class="search">
-            <input type="text" placeholder="Search..." class="search-input">
+            <input type="text" placeholder="Search..." class="search-input" />
         </div>
         <div class="acc" id="acc-desktop">
             <div class="button log-in">Masuk</div>
             <div class="button sign-in">Daftar</div>
         </div>
         <div class="burger" id="burger">
-            <svg width="30" height="30" viewBox="0 0 100 80" fill="black" xmlns="http://www.w3.org/2000/svg">
-              <rect width="100" height="15" rx="8"></rect>
-              <rect y="30" width="100" height="15" rx="8"></rect>
-              <rect y="60" width="100" height="15" rx="8"></rect>
+            <svg width="30" height="30" viewBox="0 0 100 80" fill="black">
+                <rect width="100" height="15" rx="8"></rect>
+                <rect y="30" width="100" height="15" rx="8"></rect>
+                <rect y="60" width="100" height="15" rx="8"></rect>
             </svg>
-        </div>          
+        </div>
     </div>
-    <!-- Burger Nav -->
+    
     <nav class="nav-links" id="nav-links">
-        <a href="#">Home</a>
-        <a href="#">About</a>
+        <div class="burger" id="burger-close">
+            <svg width="30" height="30" viewBox="0 0 100 80" fill="black">
+                <rect width="100" height="15" rx="8"></rect>
+                <rect y="30" width="100" height="15" rx="8"></rect>
+                <rect y="60" width="100" height="15" rx="8"></rect>
+            </svg>
+        </div>
+        <a href="../index.html">Home</a>
+        <a href="#features">Fitur-Fitur</a>
         <a href="#">Services</a>
         <a href="#">Contact</a>
-        <div class="acc" id="acc-mobile">
+        <div class="acc android" id="acc-mobile">
             <div class="button log-in">Masuk</div>
             <div class="button sign-in">Daftar</div>
         </div>
     </nav>
-    <section id="main" class="main">
-        
-    </section>
-    
+
+    <div class="box-hider"></div>
+
+    <div class="container">
+        <div class="columns">
+            <!-- Video Column -->
+            <div class="content-column">
+                <h2><i class="fas fa-video"></i> Video Edukasi</h2>
+                <div id="video-content">
+                    <div class="loading">
+                        <i class="fas fa-spinner fa-spin"></i> Memuat video...
+                    </div>
+                </div>
+            </div>
+            
+            <!-- News Column -->
+            <div class="content-column">
+                <h2><i class="fas fa-newspaper"></i> Berita Terkini</h2>
+                <div id="news-content">
+                    <div class="loading">
+                        <i class="fas fa-spinner fa-spin"></i> Memuat berita...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="container" id="formPage">
         <form id="userForm" class="card input-card">
           <h2><i class="fas fa-user-plus"></i> Data Pengguna</h2>
@@ -64,8 +180,100 @@
           <button type="submit"><i class="fas fa-bell"></i>Masuk</button>
           <button type="button" onclick="document.getElementById('formPage').style.display='none'">Tutup</button>
         </form>
-      </div>
+    </div>
+
     <script src="../js/navlink.js"></script>
     <script src="../js/readdata.js"></script>
+    <script>
+    // API Keys (Replace with your own)
+    const YOUTUBE_API_KEY = 'AIzaSyAQU5YYyU8pXaO6svthwVweCSY5qV7RxAo'; // Example key - replace with yours
+    const NEWS_API_KEY = '60cc7ac812a646faa6e6a6c473058012'; // Example key - replace with yours
+        
+    // Fetch YouTube Videos (Indonesian parenting content)
+    async function fetchVideos() {
+        try {
+            const response = await fetch(
+                `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=kehamilan+parenting+anak&relevanceLanguage=id&type=video&key=${YOUTUBE_API_KEY}`
+            );
+            const data = await response.json();
+            return data.items || [];
+        } catch (error) {
+            console.error("Error fetching videos:", error);
+            return [];
+        }
+    }
+    
+    // Fetch News Articles (Indonesian health/parenting news)
+    async function fetchNews() {
+        try {
+            const response = await fetch(
+                `https://newsapi.org/v2/everything?q=kehamilan+OR+parenting&language=id&pageSize=10&apiKey=${NEWS_API_KEY}`
+            );
+            const data = await response.json();
+            return data.articles || [];
+        } catch (error) {
+            console.error("Error fetching news:", error);
+            return [];
+        }
+    }
+    
+    // Render Videos
+    function renderVideos(videos) {
+        const container = document.getElementById('video-content');
+        
+        if (videos.length === 0) {
+            container.innerHTML = `<p>Tidak ada video yang ditemukan</p>`;
+            return;
+        }
+        
+        container.innerHTML = videos.map(video => `
+            <div class="content-card">
+                <img src="${video.snippet.thumbnails.medium.url}" class="card-image" alt="${video.snippet.title}">
+                <div class="card-body">
+                    <h3 class="card-title">${video.snippet.title}</h3>
+                    <p class="card-text">${video.snippet.channelTitle}</p>
+                    <a href="https://youtu.be/${video.id.videoId}" target="_blank" class="card-button">
+                        <i class="fas fa-play"></i> Tonton
+                    </a>
+                </div>
+            </div>
+        `).join('');
+    }
+    
+    // Render News
+    function renderNews(news) {
+        const container = document.getElementById('news-content');
+        
+        if (news.length === 0) {
+            container.innerHTML = `<p>Tidak ada berita yang ditemukan</p>`;
+            return;
+        }
+        
+        container.innerHTML = news.map(item => `
+            <div class="content-card">
+                <img src="${item.urlToImage || 'https://via.placeholder.com/400x225?text=Berita+Kehamilan'}" 
+                     class="card-image" 
+                     alt="${item.title}">
+                <div class="card-body">
+                    <h3 class="card-title">${item.title}</h3>
+                    <p class="card-text">${item.description || 'Deskripsi tidak tersedia'}</p>
+                    <a href="${item.url}" target="_blank" class="card-button">
+                        <i class="fas fa-newspaper"></i> Baca
+                    </a>
+                </div>
+            </div>
+        `).join('');
+    }
+    
+    // Initialize
+    async function loadContent() {
+        const [videos, news] = await Promise.all([fetchVideos(), fetchNews()]);
+        renderVideos(videos);
+        renderNews(news);
+    }
+    
+    // Start loading when page loads
+    document.addEventListener('DOMContentLoaded', loadContent);
+    </script>
 </body>
 </html>
