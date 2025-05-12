@@ -217,3 +217,18 @@ body, html {
 .message-input button:hover {
   background: #00796b;
 }
+
+
+#clearChatBtn {
+  margin-top: 40px;
+  border: none;
+  width: 200px;
+  border-radius: 10px;
+  padding: 11px 5px 11px 5px;
+  transition: .4s all;
+}
+
+#clearChatBtn:hover {
+  background: red;
+  color: white;
+}

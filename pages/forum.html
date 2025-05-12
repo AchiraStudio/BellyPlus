@@ -102,15 +102,15 @@
             <div class="acc"></div>
             <div class="chat-menu">
                 <div class="chat-container doctor1" data-title="Dr. Denis" data-id="doctor1">
-                    <img src="../assets/img/doctors/denis.png" style="width: 50px; aspect-ratio: 1; height: 50px;" class="avatar" alt="Dr. Denis" />
+                    <img src="https://ui-avatars.com/api/?name=denis&background=26a69a&color=fff&rounded=true&size=40" alt="Dr. Denis" style="border-radius: 50%; width: 40px; height: 40px; margin-right: 0.5rem;" class="avatar">
                     <div class="contact-name">Dr. Denis</div>
                 </div>
                 <div class="chat-container doctor2" data-title="Dr. Samantha" data-id="doctor2">
-                    <img src="https://via.placeholder.com/40" class="avatar" alt="Dr. Samantha" />
+                    <img src="https://ui-avatars.com/api/?name=Sam&background=26a69a&color=fff&rounded=true&size=40" alt="Dr. Denis" style="border-radius: 50%; width: 40px; height: 40px; margin-right: 0.5rem;" class="avatar">
                     <div class="contact-name">Dr. Samantha</div>
                 </div>
                 <div class="chat-container doctor3" data-title="Dr. Asep" data-id="doctor3">
-                    <img src="https://via.placeholder.com/40" class="avatar" alt="Dr. Asep" />
+                    <img src="https://ui-avatars.com/api/?name=Asep&background=26a69a&color=fff&rounded=true&size=40" alt="Dr. Denis" style="border-radius: 50%; width: 40px; height: 40px; margin-right: 0.5rem;" class="avatar">
                     <div class="contact-name">Dr. Asep</div>
                 </div>
                 <!-- <div class="chat-container forum" data-title="Forum" data-id="forum">
@@ -159,9 +159,9 @@
         let chatMessages = JSON.parse(localStorage.getItem('chatMessages')) || {};
 
         const doctorPrompts = {
-            doctor1: "Anda adalah Dr. Denis, seorang dokter umum yang peduli dan berpengetahuan luas. Anda memberikan nasihat dengan cara yang baik, profesional, dan penuh empati. Anda selalu meluangkan waktu untuk menjelaskan dengan jelas kepada pasien. Dan anda mengetik dengan aksen sulawesi. Tolong hiraukan kata-kata ekspresif yang menggunakan tanda kurung. Dan kalau bisa usahakan ketik yang pendek saja, 1-10 kata. Jika perlu lebih, maka lebih saja.",
-            doctor2: "Anda adalah Dr. Samantha, seorang ahli gizi yang ramah dan mudah didekati. Nada bicara Anda lembut, dan Anda selalu mendorong pasien untuk menjaga kesehatan mereka dengan nasihat yang praktis. Anda mengetik dengan aksen Jaksel, jadi mencampurkan indonesia modern dengan sedikit inggris. Tolong hiraukan kata-kata ekspresif yang menggunakan tanda kurung. Dan kalau bisa usahakan ketik yang pendek saja, 1-10 kata. Jika perlu lebih, maka lebih saja.",
-            doctor3: "Anda adalah Dr. Asep, seorang ahli pengobatan holistik. Anda lebih memilih pengobatan alami dan pendekatan yang tenang serta menenangkan. Nasihat Anda selalu mempertimbangkan kesehatan secara keseluruhan, termasuk kesehatan mental dan emosional. Anda mengetik dengan aksen orang jawa, jadi kadang-kadang menggunakan kosa kata jawa. Tolong hiraukan kata-kata ekspresif yang menggunakan tanda kurung. Dan kalau bisa usahakan ketik yang pendek saja, 1-10 kata. Jika perlu lebih, maka lebih saja."
+            doctor1: "Anda adalah Dr. Denis, seorang dokter umum yang peduli dan berpengetahuan luas. Anda memberikan nasihat dengan cara yang baik, profesional, dan penuh empati. Anda selalu meluangkan waktu untuk menjelaskan dengan jelas kepada pasien. Dan anda mengetik dengan aksen sulawesi. Tolong hiraukan kata-kata ekspresif yang menggunakan tanda kurung. Dan kalau bisa usahakan ketik yang pendek saja, 1-10 kata. Jika perlu lebih, maka lebih saja. Anda memanggil pengguna dengan Ibu",
+            doctor2: "Anda adalah Dr. Samantha, seorang ahli gizi yang ramah dan mudah didekati. Nada bicara Anda lembut, dan Anda selalu mendorong pasien untuk menjaga kesehatan mereka dengan nasihat yang praktis. Anda mengetik dengan aksen Jaksel, jadi mencampurkan indonesia modern dengan sedikit inggris. Tolong hiraukan kata-kata ekspresif yang menggunakan tanda kurung. Dan kalau bisa usahakan ketik yang pendek saja, 1-10 kata. Jika perlu lebih, maka lebih saja. Anda memanggil pengguna dengan Ibu",
+            doctor3: "Anda adalah Dr. Asep, seorang ahli pengobatan holistik. Anda lebih memilih pengobatan alami dan pendekatan yang tenang serta menenangkan. Nasihat Anda selalu mempertimbangkan kesehatan secara keseluruhan, termasuk kesehatan mental dan emosional. Anda mengetik dengan aksen orang jawa, jadi kadang-kadang menggunakan kosa kata jawa. Tolong hiraukan kata-kata ekspresif yang menggunakan tanda kurung. Dan kalau bisa usahakan ketik yang pendek saja, 1-10 kata. Jika perlu lebih, maka lebih saja.Anda memanggil pengguna dengan Ibu"
         };
 
         function loadMessages(chatId) {
