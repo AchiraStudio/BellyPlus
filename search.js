@@ -5,7 +5,7 @@ const features = [
   { name: 'Edukasi / Artikel', url: 'pages/edu.html' },
   { name: 'Pill Reminder / Smart Pill', url: 'pages/s-pill.html' },
   { name: 'Konsultasi / Diskusi', url: 'pages/forum.html' },
-  { name: 'Tracker / Pelacak Bayi', url: '/pages/tracker.html' },
+  { name: 'Tracker / Pelacak Bayi', url: 'pages/tracker.html' },
   { name: 'Home / Menu Utama', url: 'index.html' }
 ];
 
