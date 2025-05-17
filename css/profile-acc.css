@@ -357,6 +357,10 @@ body {
   color: var(--primary-color);
 }
 
+.search-mobile {
+  display: none;
+}
+
 @media screen and (max-width: 431px) {
     /* Navbar Adjustment */
     .navbar {
@@ -371,8 +375,19 @@ body {
     }
 
     /* Search Bar - Hide on mobile */
-    .search {
+    #search-desktop {
         display: none;
+    }
+    .search-mobile {
+      display: flex;
+    }
+    #search-android {
+      display: flex;
+      width: 200px;
+      margin-top: 15px;
+    }
+    .search-results {
+      margin-top: 70px;
     }
 
     /* Burger Menu */
@@ -459,7 +474,6 @@ body {
         box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
         opacity: 0;
         pointer-events: none;
-        transition: transform 0.4s ease-in-out;
     }
     
     /* When side nav is active, it slides in */

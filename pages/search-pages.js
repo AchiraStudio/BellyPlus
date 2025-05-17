@@ -9,32 +9,38 @@ const features = [
   { name: 'Home / Menu Utama', url: '../index.html' }
 ];
 
-// Show all features when focused
-searchInput.addEventListener('focus', () => {
-  renderResults(features);
-  searchResults.classList.add('active');
+// Show all results when focused
+searchInputs.forEach((input, index) => {
+  const resultsBox = searchResultsList[index];
+
+  input.addEventListener('focus', () => {
+    renderResults(features, resultsBox);
+    resultsBox.classList.add('active');
+  });
+
+  input.addEventListener('input', () => {
+    const keyword = input.value.toLowerCase();
+    const filtered = features.filter(f => f.name.toLowerCase().includes(keyword));
+    renderResults(filtered, resultsBox);
+  });
 });
 
-// Filter as user types
-searchInput.addEventListener('input', () => {
-  const keyword = searchInput.value.toLowerCase();
-  const filtered = features.filter(f => f.name.toLowerCase().includes(keyword));
-  renderResults(filtered);
-});
-
-// Hide results when clicking outside
+// Hide results when clicking outside any search box
 document.addEventListener('click', (e) => {
-  if (!document.querySelector('.search').contains(e.target)) {
-    searchResults.classList.remove('active');
+  const isInSearch = [...document.querySelectorAll('.search, .search-mobile')]
+    .some(searchBox => searchBox.contains(e.target));
+
+  if (!isInSearch) {
+    searchResultsList.forEach(r => r.classList.remove('active'));
   }
 });
 
 // Render the search results
-function renderResults(list) {
-  searchResults.innerHTML = '';
+function renderResults(list, container) {
+  container.innerHTML = '';
 
   if (list.length === 0) {
-    searchResults.classList.remove('active');
+    container.classList.remove('active');
     return;
   }
 
@@ -47,8 +53,8 @@ function renderResults(list) {
       window.location.href = feature.url;
     });
 
-    searchResults.appendChild(div);
+    container.appendChild(div);
   });
 
-  searchResults.classList.add('active');
+  container.classList.add('active');
 }
