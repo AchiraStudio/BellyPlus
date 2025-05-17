@@ -6,6 +6,11 @@
     <title>BellyPlus - Demo Website</title>
     <link rel="stylesheet" href="css/style-main.css">
     <link rel="stylesheet" href="css/profile-acc.css">
+    <style>
+        .navbar {
+            left: 0;
+        }
+    </style>
 </head>
 <body>
     <div class="navbar">
@@ -14,8 +19,7 @@
             <h1 class="main-text second">Plus</h1>
         </div>
         <div class="search">
-            <input type="text" placeholder="Cari Fitur. . ." class="search-input" />
-            <div class="search-results"></div>
+            <input type="text" placeholder="Search..." class="search-input" />
         </div>
         <div class="acc" id="acc-desktop">
             <div class="button log-in">Masuk</div>
@@ -45,37 +49,31 @@
             <div class="button log-in">Masuk</div>
             <div class="button sign-in">Daftar</div>
         </div>
-    </nav>
-
+    </nav>    
+    
     <section id="top">
         <div class="hero-container">
-            <div class="text-hero">
-                <div class="slogan-hero">
-                    <h1>Fighting for Health, Striving for All</h1>
+            <div class="main-img">
+                <img src="assets/bellyplus_logo.png" alt="" id="logo">
+                <div class="text">
+                    <div id="title">
+                        <h1 class="main-text first">Belly</h1>
+                        <h1 class="main-text second">Plus</h1>
+                    </div>
+                    <div id="desc">
+                        <p>Selamat datang di BellyPlus, tempat dimana kita bisa menjaminkan kesehatan anda dan juga calon anak anda. Mari jelajah lebih lanjut!</p>
+                    </div>
                 </div>
-                <div class="by-hero">
-                    <p>~ Wellness Warriors</p>
-                </div>
-                <div class="desc-hero">
-                    <p>Selamat datang di BellyPlus. Kami akan menemani perjalanan anda sebagai teman baik anda. Memberikan informasi, edukasi, dan kenyamanan.</p>
-                </div>
-            </div>
-            <div class="img-hero">
-                <img src="assets/img/riya_inspyrenet.png" alt="" id="riya">
-                <img src="assets/bellyplus_logo.png" alt="" id="belly">
             </div>
         </div>
     </section>
     <section id="features">
-        
-    </section>
-    <footer class="app-footer">
-        <p>© 2025 BellyPlus. Semua data tersimpan dengan aman.</p>
-        <div class="footer-links">
-            <a href="#"><i class="fas fa-shield-alt"></i> Privasi</a>
-            <a href="#"><i class="fas fa-question"></i> Bantuan</a>
+        <div class="feat-top">
+            <div class="feat-desc">
+                <h1>Ini adalah <span id="feat-belly">Belly</span><span id="feat-plus">Plus</span></h1>
+            </div>
         </div>
-    </footer>
+    </section>
 
     <div class="container" id="formPage">
         <form id="userForm" class="card input-card">
@@ -92,8 +90,27 @@
           <button type="button" onclick="document.getElementById('formPage').style.display='none'">Tutup</button>
         </form>
     </div>
+
     <script src="js/navlink.js"></script>
     <script src="js/readdata.js"></script>
-    <script src="js/search.js"></script>
+      
+    <!-- <script>
+        // tab switching
+        const tabs = document.querySelectorAll('.tab');
+        const contents = document.querySelectorAll('.content-feat');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active classes
+                tabs.forEach(t => t.classList.remove('active'));
+                contents.forEach(c => c.classList.remove('active'));
+        
+                // Add to clicked tab + corresponding content
+                tab.classList.add('active');
+                const targetClass = tab.getAttribute('data-target');
+                document.querySelector(`.${targetClass}`).classList.add('active');
+            });
+        });
+    </script>     -->
 </body>
 </html>

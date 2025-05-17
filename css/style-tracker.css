@@ -588,33 +588,6 @@ button {
   color: var(--text-light);
 }
 
-/* Footer Styles */
-.app-footer {
-  text-align: center;
-  padding: 1.5rem 0;
-  color: var(--text-light);
-  font-size: 0.85rem;
-}
-
-.footer-links {
-  display: flex;
-  justify-content: center;
-  gap: 1.5rem;
-  margin-top: 0.8rem;
-}
-
-.footer-links a {
-  color: var(--text-light);
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-}
-
-.footer-links a:hover {
-  color: var(--primary-color);
-}
-
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {

@@ -1,204 +1,87 @@
-* {
-    margin: 0;
-    box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
-    font-style: normal;
-    /* outline: 1px solid rgba(255, 0, 0, 0.2); */ /* Optional: Use for debugging */
-}
-
+@import url(profile-acc.css);
 body {
-    background-color: #f5e5ecd3;
-    overflow-x: hidden; /* Prevent horizontal overflow */
+    position: relative;
+    min-height: 100vh;
 }
 
-.hero-container {
-    width: 95%;
-    height: 75vh;
-    border-radius: 20px;
-    background: rgba(218, 218, 230, 0.767);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap; /* In case screen is too small */
-}
-
-.main-img {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+#top {
     width: 100%;
-    height: 80%;
+    height: 100vh;
+    position: relative;
 }
-#logo {
-    width: 450px;
-    height: 450px;
-}
-.text {
-    width: 550px;
-    height: 450px;
+/* Hero Container */
+.hero-container {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: #E0F7FA;
+    background: -webkit-linear-gradient(121deg, rgba(224, 247, 250, 1) 0%, rgba(237, 206, 206, 1) 38%, rgba(245, 230, 230, 1) 75%, rgba(219, 197, 197, 1) 100%);
+    background: -moz-linear-gradient(121deg, rgba(224, 247, 250, 1) 0%, rgba(237, 206, 206, 1) 38%, rgba(245, 230, 230, 1) 75%, rgba(219, 197, 197, 1) 100%);
+    background: linear-gradient(121deg, rgba(224, 247, 250, 1) 0%, rgba(237, 206, 206, 1) 38%, rgba(245, 230, 230, 1) 75%, rgba(219, 197, 197, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#E0F7FA", endColorstr="#DBC5C5", GradientType=0);
+    display: flex;
     justify-content: center;
     align-items: center;
-    display: flex;
-    flex-direction: column;
-    margin-left: 100px;
-}
-#title {
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    margin-bottom: 20px;
-}
-#title h1 {
-    font-size: 40px;
 }
 
-#desc p {
-    font-size: 18px;
-}
+    /* Text Hero */
+    .text-hero {
+        background: transparent;
+        padding: 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 500px;
+    }
+    .slogan-hero h1 {
+        font-size: 47px;
+    }
+    .by-hero p {
+        text-align: left;
+        translate: -100px;
+        font-style: italic;
+    }
+    .desc-hero {
+        width: 800px;
+    }
+    .desc-hero p {
+        letter-spacing: 2.3px;
+        translate: 0 50px;
+    }
 
-/* Features Section */
+    /* Hero Image */
+    .img-hero {
+        position: relative;
+        width: 800px;
+        height: 100%;
+    }
+    .img-hero img {
+        position: absolute;
+    }
+    #riya {
+        width: 800px;
+        translate: 250px -50px;
+        z-index: 2;
+        pointer-events: none;
+    }
+    #belly {
+        width: 400px;
+        z-index: 1;
+        translate: 150px 150px;
+        border-radius: 50%;
+        box-shadow: 0 0 60px 5px rgba(238, 9, 74, 0.6);
+        transition: box-shadow 0.3s ease;
+    }
+    #belly:hover {
+        box-shadow: 0 0 70px 10px rgba(85, 51, 236, 0.6);
+    }
+
+/* End Hero */
+
 #features {
     width: 100%;
-    padding: 4rem 1rem;
-    background: #f5e5ecd3;
-    box-sizing: border-box;
-    display: flex;
-    flex-wrap: wrap;
+    height: 100vh;
+    background: white;
     position: relative;
-    border-radius: 20px;
-    height: 80vh;
-    align-items: center; /* Center content vertically */
-    justify-content: center;
-}
-
-/* Tab Container - Left Column */
-.selection {
-    display: flex;
-    flex-direction: column; /* Stack the tabs vertically */
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 1.5rem;
-    margin-right: 2rem; /* Space between tabs and content */
-    flex: 1; /* Allow tabs to take up a portion of the container */
-    min-width: 200px; /* Prevent tabs from being too narrow */
-    align-self: flex-start; /* Align the tabs container to the top */
-}
-
-/* Individual Tab Cards */
-.tab {
-    background-color: #ffffff;
-    border-radius: 1rem;
-    padding: 1.5rem;
-    width: 100%;
-    height: auto; /* Allow tabs to adjust height dynamically */
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-    font-weight: 600;
-    color: #333;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    min-height: 120px; /* Ensure tabs have consistent height */
-}
-
-.tab:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-}
-
-.tab.active {
-    background-color: #8C062D;
-    color: #ffffff;
-}
-
-/* Content Container - Right Column */
-.container-feat {
-    display: flex;
-    flex-direction: column; /* Stack the content vertically */
-    align-items: flex-start;
-    gap: 1.5rem;
-    flex: 3; /* Allow content to take more space */
-    padding: 0 1rem;
-    width: 100%;
-    align-self: flex-end; /* Align content to the top */
-    margin-left: 15rem;
-}
-
-/* Hide all content by default */
-.content-feat {
-    display: none;
-    flex-direction: column;
-    background-color: #fff;
-    padding: 2rem;
-    border-radius: 1rem;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
-    gap: 1rem;
-    animation: fadeIn 0.3s ease;
-}
-
-.content-feat.active {
-    display: flex;
-}
-
-/* Text content inside each tab panel */
-.content-feat .text {
-    font-size: 1rem;
-    color: #444;
-    text-align: center;
-    line-height: 1.6;
-}
-
-/* Button style inside content */
-.content-feat .button a {
-    display: inline-block;
-    margin-top: 1rem;
-    padding: 0.75rem 1.5rem;
-    background-color: #760021;
-    color: #fff;
-    border-radius: 8px;
-    font-weight: 500;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-}
-
-.content-feat .button a:hover {
-    background-color: #60001b;
-}
-
-/* Fade-in animation */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Responsive layout - Stacked layout on smaller screens */
-@media (max-width: 768px) {
-    #features {
-        flex-direction: column; /* Stack both the tabs and content vertically */
-    }
-
-    .selection {
-        flex-direction: row; /* Stack tabs in a row */
-        gap: 1rem;
-        margin-right: 0;
-        margin-bottom: 2rem;
-        align-items: center; /* Center tabs horizontally */
-    }
-
-    .tab {
-        width: auto;
-        height: auto;
-    }
-
-    .container-feat {
-        padding: 0 1rem;
-    }
-}
-
-@media screen and (max-width: 431px) {
-    #top, #features {
-        display: none;
-    }
 }

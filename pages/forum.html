@@ -62,7 +62,8 @@
             <h1 class="main-text second">Plus</h1>
         </div>
         <div class="search">
-            <input type="text" placeholder="Search..." class="search-input" />
+            <input type="text" placeholder="Cari Fitur. . ." class="search-input" />
+            <div class="search-results"></div>
         </div>
         <div class="acc" id="acc-desktop">
             <div class="button log-in">Masuk</div>
@@ -147,7 +148,15 @@
             <button type="button" onclick="document.getElementById('formPage').style.display='none'">Tutup</button>
         </form>
     </div>
+    <footer class="app-footer">
+        <p>© 2025 BellyPlus. Semua data tersimpan dengan aman.</p>
+        <div class="footer-links">
+            <a href="#"><i class="fas fa-shield-alt"></i> Privasi</a>
+            <a href="#"><i class="fas fa-question"></i> Bantuan</a>
+        </div>
+    </footer>
 
+    <script src="../js/search.js"></script>
     <script>
         const chatContainers = document.querySelectorAll('.chat-container');
         const title = document.querySelector('.chat-box .title');

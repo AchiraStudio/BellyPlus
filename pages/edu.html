@@ -107,7 +107,8 @@
             <h1 class="main-text second">Plus</h1>
         </div>
         <div class="search">
-            <input type="text" placeholder="Search..." class="search-input" />
+            <input type="text" placeholder="Cari Fitur. . ." class="search-input" />
+            <div class="search-results"></div>
         </div>
         <div class="acc" id="acc-desktop">
             <div class="button log-in">Masuk</div>
@@ -120,8 +121,7 @@
                 <rect y="60" width="100" height="15" rx="8"></rect>
             </svg>
         </div>
-    </div>
-    
+    </div> 
     <nav class="nav-links" id="nav-links">
         <div class="burger" id="burger-close">
             <svg width="30" height="30" viewBox="0 0 100 80" fill="black">
@@ -181,9 +181,17 @@
           <button type="button" onclick="document.getElementById('formPage').style.display='none'">Tutup</button>
         </form>
     </div>
+    <footer class="app-footer">
+        <p>© 2025 BellyPlus. Semua data tersimpan dengan aman.</p>
+        <div class="footer-links">
+            <a href="#"><i class="fas fa-shield-alt"></i> Privasi</a>
+            <a href="#"><i class="fas fa-question"></i> Bantuan</a>
+        </div>
+    </footer>
 
     <script src="../js/navlink.js"></script>
     <script src="../js/readdata.js"></script>
+    <script src="../js/search.js"></script>
     <script>
     // API Keys (Replace with your own)
     const YOUTUBE_API_KEY = 'AIzaSyAQU5YYyU8pXaO6svthwVweCSY5qV7RxAo'; // Example key - replace with yours

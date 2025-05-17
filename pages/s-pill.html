@@ -27,14 +27,14 @@
     @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 </style>
 </head>
-
     <div class="navbar">
         <div class="logo">
             <h1 class="main-text first">Belly</h1>
             <h1 class="main-text second">Plus</h1>
         </div>
         <div class="search">
-            <input type="text" placeholder="Search..." class="search-input" />
+            <input type="text" placeholder="Cari Fitur. . ." class="search-input" />
+            <div class="search-results"></div>
         </div>
         <div class="acc" id="acc-desktop">
             <div class="button log-in">Masuk</div>
@@ -48,7 +48,6 @@
             </svg>
         </div>
     </div>
-    
     <nav class="nav-links" id="nav-links">
         <div class="burger" id="burger-close">
             <svg width="30" height="30" viewBox="0 0 100 80" fill="black">
@@ -307,9 +306,16 @@
           <button type="button" onclick="document.getElementById('formPage').style.display='none'">Tutup</button>
         </form>
       </div>
-</div>
+    <footer class="app-footer">
+        <p>© 2025 BellyPlus. Semua data tersimpan dengan aman.</p>
+        <div class="footer-links">
+            <a href="#"><i class="fas fa-shield-alt"></i> Privasi</a>
+            <a href="#"><i class="fas fa-question"></i> Bantuan</a>
+        </div>
+    </footer>
   <script src="../js/navlink.js"></script>
   <script src="../js/readdata.js"></script>
+  <script src="../js/search.js"></script>
   <script>
         function setAvatarImage(name) {
             const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=26a69a&color=fff&rounded=true&size=40`;
