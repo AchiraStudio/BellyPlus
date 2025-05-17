@@ -2,11 +2,11 @@ const searchInput = document.querySelector('.search-input');
 const searchResults = document.querySelector('.search-results');
 
 const features = [
-  { name: 'Edukasi / Artikel', url: '../pages/edu.html' },
-  { name: 'Pill Reminder / Smart Pill', url: '../pages/s-pill.html' },
-  { name: 'Konsultasi / Diskusi', url: '../pages/forum.html' },
-  { name: 'Tracker / Pelacak Bayi', url: '../pages/tracker.html' },
-  { name: 'Home / Menu Utama', url: '../index.html' }
+  { name: 'Edukasi / Artikel', url: 'pages/edu.html' },
+  { name: 'Pill Reminder / Smart Pill', url: 'pages/s-pill.html' },
+  { name: 'Konsultasi / Diskusi', url: 'pages/forum.html' },
+  { name: 'Tracker / Pelacak Bayi', url: '/pages/tracker.html' },
+  { name: 'Home / Menu Utama', url: 'index.html' }
 ];
 
 // Show all features when focused
