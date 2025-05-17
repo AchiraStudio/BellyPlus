@@ -1,4 +1,5 @@
 @import url(profile-acc.css);
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
 body {
     position: relative;
     min-height: 100vh;
@@ -43,7 +44,7 @@ body {
         font-style: italic;
     }
     .desc-hero {
-        width: 800px;
+        width: 700px;
     }
     .desc-hero p {
         letter-spacing: 2.3px;
@@ -84,4 +85,24 @@ body {
     height: 100vh;
     background: white;
     position: relative;
+}
+
+@media screen and (max-width: 1650px) {
+    #riya {
+        width: 600px;
+        translate: 250px 10px;
+        z-index: 2;
+        pointer-events: none;
+    }
+    #belly {
+        width: 350px;
+        z-index: 1;
+        translate: 150px 150px;
+        border-radius: 50%;
+        box-shadow: 0 0 60px 5px rgba(238, 9, 74, 0.6);
+        transition: box-shadow 0.3s ease;
+    }
+    .desc-hero {
+        width: 500px;
+    }
 }
