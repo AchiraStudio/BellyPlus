@@ -10,28 +10,22 @@ const features = [
 ];
 
 // Show all results when focused
-searchInputs.forEach((input, index) => {
-  const resultsBox = searchResultsList[index];
-
-  input.addEventListener('focus', () => {
-    renderResults(features, resultsBox);
-    resultsBox.classList.add('active');
-  });
-
-  input.addEventListener('input', () => {
-    const keyword = input.value.toLowerCase();
-    const filtered = features.filter(f => f.name.toLowerCase().includes(keyword));
-    renderResults(filtered, resultsBox);
-  });
+searchInput.addEventListener('focus', () => {
+  renderResults(features, searchResults);
+  searchResults.classList.add('active');
 });
 
-// Hide results when clicking outside any search box
-document.addEventListener('click', (e) => {
-  const isInSearch = [...document.querySelectorAll('.search, .search-mobile')]
-    .some(searchBox => searchBox.contains(e.target));
+// Filter results as user types
+searchInput.addEventListener('input', () => {
+  const keyword = searchInput.value.toLowerCase();
+  const filtered = features.filter(f => f.name.toLowerCase().includes(keyword));
+  renderResults(filtered, searchResults);
+});
 
-  if (!isInSearch) {
-    searchResultsList.forEach(r => r.classList.remove('active'));
+// Hide results when clicking outside
+document.addEventListener('click', (e) => {
+  if (!document.querySelector('.search').contains(e.target)) {
+    searchResults.classList.remove('active');
   }
 });
 

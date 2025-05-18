@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Pill Statistik</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      /* Color System */
+      --primary-50: #fef2f2;
+      --primary-100: #fee2e2;
+      --primary-200: #fecaca;
+      --primary-300: #fca5a5;
+      --primary-400: #f87171;
+      --primary-500: #ef4444;
+      --primary-600: #dc2626;
+      --primary-700: #b91c1c;
+      --primary-800: #991b1b;
+      --primary-900: #7f1d1d;
+      
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-300: #d1d5db;
+      --gray-400: #9ca3af;
+      --gray-500: #6b7280;
+      --gray-600: #4b5563;
+      --gray-700: #374151;
+      --gray-800: #1f2937;
+      --gray-900: #111827;
+      
+      --success-500: #10b981;
+      --warning-500: #f59e0b;
+      --danger-500: #ef4444;
+      --info-500: #3b82f6;
+      
+      /* Semantic Colors */
+      --text-primary: var(--gray-900);
+      --text-secondary: var(--gray-600);
+      --bg-primary: var(--gray-50);
+      --bg-secondary: white;
+      --border-color: var(--gray-200);
+      
+      /* Spacing */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2rem;
+      
+      /* Typography */
+      --text-sm: 0.875rem;
+      --text-base: 1rem;
+      --text-lg: 1.125rem;
+      --text-xl: 1.25rem;
+      --text-2xl: 1.5rem;
+      --text-3xl: 1.875rem;
+      
+      /* Shadows */
+      --shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.05);
+      --shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px 0 rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+      
+      /* Border Radius */
+      --rounded-sm: 0.25rem;
+      --rounded: 0.5rem;
+      --rounded-md: 0.75rem;
+      --rounded-lg: 1rem;
+      --rounded-full: 9999px;
+      
+      /* Transitions */
+      --transition-fast: 100ms;
+      --transition-normal: 200ms;
+      --transition-slow: 300ms;
+    }
+
+    /* Dark Mode */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --text-primary: white;
+        --text-secondary: var(--gray-300);
+        --bg-primary: var(--gray-900);
+        --bg-secondary: var(--gray-800);
+        --border-color: var(--gray-700);
+      }
+    }
+
+    /* Base Styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.5;
+      padding: var(--space-md);
+      min-height: 100vh;
+    }
+
+    h1, h2, h3, h4 {
+      font-weight: 600;
+      line-height: 1.25;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    button {
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    /* Utility Classes */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Dashboard Layout */
+    .dashboard {
+      display: grid;
+      gap: var(--space-lg);
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-areas:
+        "header header header header header header header header header header header header"
+        "sidebar main main main main main main main main main main main";
+    }
+
+    @media (max-width: 1024px) {
+      .dashboard {
+        grid-template-areas:
+          "header header header header header header header header header header header header"
+          "main main main main main main main main main main main main";
+      }
+    }
+
+    .dashboard-header {
+      grid-area: header;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--space-md) 0;
+    }
+
+    .dashboard-sidebar {
+      grid-area: sidebar;
+    }
+
+    .dashboard-main {
+      grid-area: main;
+      display: grid;
+      gap: var(--space-lg);
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+
+    /* Cards */
+    .card {
+      background-color: var(--bg-secondary);
+      border-radius: var(--rounded-lg);
+      box-shadow: var(--shadow);
+      padding: var(--space-lg);
+      transition: transform var(--transition-normal) ease, box-shadow var(--transition-normal) ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-md);
+    }
+
+    .card-title {
+      font-size: var(--text-xl);
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    /* Profile Card */
+    .profile-card {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .profile-info {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+
+    .profile-avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: var(--rounded-full);
+      object-fit: cover;
+      border: 3px solid var(--primary-100);
+    }
+
+    .profile-details {
+      flex: 1;
+    }
+
+    .profile-name {
+      font-size: var(--text-lg);
+      font-weight: 600;
+    }
+
+    .profile-id {
+      color: var(--text-secondary);
+      font-size: var(--text-sm);
+    }
+
+    .profile-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-sm);
+      margin-top: var(--space-md);
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: var(--space-sm);
+      background-color: var(--bg-primary);
+      border-radius: var(--rounded);
+    }
+
+    .stat-value {
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: var(--primary-600);
+    }
+
+    .stat-label {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+    }
+
+    /* Medicine Card */
+    .medicine-info {
+      display: flex;
+      gap: var(--space-md);
+      margin-bottom: var(--space-md);
+    }
+
+    .medicine-image {
+      width: 80px;
+      height: 80px;
+      border-radius: var(--rounded);
+      object-fit: cover;
+      background-color: var(--gray-100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gray-400);
+    }
+
+    .medicine-details {
+      flex: 1;
+    }
+
+    .medicine-name {
+      font-size: var(--text-lg);
+      font-weight: 600;
+      margin-bottom: var(--space-xs);
+    }
+
+    .medicine-id {
+      color: var(--text-secondary);
+      font-size: var(--text-sm);
+      margin-bottom: var(--space-sm);
+    }
+
+    .medicine-property {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-xs);
+      font-size: var(--text-sm);
+    }
+
+    .medicine-actions {
+      display: flex;
+      gap: var(--space-sm);
+      margin-top: var(--space-md);
+    }
+
+    .btn {
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--rounded);
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      transition: all var(--transition-fast) ease;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background-color: var(--primary-600);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-700);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      border-color: var(--border-color);
+      color: var(--text-primary);
+    }
+
+    .btn-outline:hover {
+      background-color: var(--bg-primary);
+    }
+
+    /* Schedule Card */
+    .schedule-card {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .compliance-meter {
+      display: flex;
+      align-items: center;
+      gap: var(--space-lg);
+      margin-bottom: var(--space-md);
+    }
+
+    .meter-gauge {
+      position: relative;
+      width: 80px;
+      height: 80px;
+    }
+
+    .gauge-circle {
+      width: 100%;
+      height: 100%;
+      transform: rotate(-90deg);
+    }
+
+    .gauge-circle circle {
+      fill: none;
+      stroke-width: 8;
+      stroke-linecap: round;
+    }
+
+    .gauge-bg {
+      stroke: var(--gray-200);
+    }
+
+    .gauge-progress {
+      stroke: var(--success-500);
+      stroke-dasharray: 251;
+      stroke-dashoffset: calc(251 - (251 * 0.75));
+      animation: gauge-fill 1s ease-out forwards;
+    }
+
+    @keyframes gauge-fill {
+      from { stroke-dashoffset: 251; }
+    }
+
+    .gauge-value {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: var(--text-lg);
+      font-weight: 600;
+    }
+
+    .schedule-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    .schedule-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-sm);
+      border-radius: var(--rounded);
+      transition: background-color var(--transition-fast) ease;
+    }
+
+    .schedule-item:hover {
+      background-color: var(--bg-primary);
+    }
+
+    .schedule-time {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      min-width: 80px;
+    }
+
+    .time-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--rounded-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+
+    .morning-icon {
+      background-color: #f59e0b;
+    }
+
+    .afternoon-icon {
+      background-color: #10b981;
+    }
+
+    .evening-icon {
+      background-color: #3b82f6;
+    }
+
+    .night-icon {
+      background-color: #6366f1;
+    }
+
+    .schedule-details {
+      flex: 1;
+    }
+
+    .schedule-status {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+    }
+
+    .status-completed {
+      color: var(--success-500);
+    }
+
+    .status-upcoming {
+      color: var(--warning-500);
+    }
+
+    .status-missed {
+      color: var(--danger-500);
+    }
+
+    .schedule-action {
+      margin-left: auto;
+    }
+
+    /* Facts Card */
+    .fact-item {
+      padding: var(--space-md);
+      background-color: var(--bg-primary);
+      border-radius: var(--rounded);
+      margin-bottom: var(--space-sm);
+    }
+
+    .fact-item.highlight {
+      border-left: 4px solid var(--primary-600);
+      background-color: rgba(239, 68, 68, 0.05);
+    }
+
+    .fact-title {
+      font-size: var(--text-base);
+      font-weight: 600;
+      margin-bottom: var(--space-xs);
+    }
+
+    .fact-content {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+    }
+
+    /* Empty State */
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: var(--space-xl) var(--space-md);
+      color: var(--text-secondary);
+    }
+
+    .empty-state-icon {
+      font-size: 3rem;
+      margin-bottom: var(--space-md);
+      color: var(--gray-400);
+    }
+
+    .empty-state-text {
+      margin-bottom: var(--space-md);
+    }
+
+    /* Modal */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all var(--transition-normal) ease;
+    }
+
+    .modal.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content {
+      background-color: var(--bg-secondary);
+      border-radius: var(--rounded-lg);
+      width: 100%;
+      max-width: 500px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: var(--space-lg);
+      box-shadow: var(--shadow-lg);
+      transform: translateY(20px);
+      transition: transform var(--transition-normal) ease;
+    }
+
+    .modal.show .modal-content {
+      transform: translateY(0);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-md);
+    }
+
+    .modal-title {
+      font-size: var(--text-xl);
+      font-weight: 600;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: var(--text-xl);
+      cursor: pointer;
+      color: var(--text-secondary);
+    }
+
+    .form-group {
+      margin-bottom: var(--space-md);
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: var(--space-xs);
+      font-weight: 500;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: var(--space-sm);
+      border: 1px solid var(--border-color);
+      border-radius: var(--rounded);
+      font-family: inherit;
+      font-size: var(--text-base);
+    }
+
+    .form-select {
+      width: 100%;
+      padding: var(--space-sm);
+      border: 1px solid var(--border-color);
+      border-radius: var(--rounded);
+      font-family: inherit;
+      font-size: var(--text-base);
+      background-color: var(--bg-secondary);
+      color: var(--text-primary);
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: var(--space-sm);
+      margin-top: var(--space-lg);
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .profile-stats {
+        grid-template-columns: 1fr;
+      }
+      
+      .medicine-actions {
+        flex-direction: column;
+      }
+      
+      .compliance-meter {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    /* Accessibility Focus Styles */
+    button:focus, a:focus, input:focus {
+      outline: 2px solid var(--primary-500);
+      outline-offset: 2px;
+    }
+
+    /* Animation for interactive elements */
+    @media (prefers-reduced-motion: no-preference) {
+      .card {
+        animation: fadeIn 0.5s ease-out;
+      }
+      
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="dashboard">
+      <header class="dashboard-header">
+        <h1>Smart Pill Tracker</h1>
+        <div class="user-controls" id="userControls">
+          <button class="btn btn-outline log-in">
+            <i class="fas fa-user"></i> Log In
+          </button>
+        </div>
+      </header>
+
+      <main class="dashboard-main">
+        <!-- Profile Card -->
+        <section class="card profile-card">
+          <div class="card-header">
+            <h2 class="card-title">
+              <i class="fas fa-user-circle"></i>
+              Profil Pengguna
+            </h2>
+            <span class="badge">Aktif</span>
+          </div>
+          
+          <div class="profile-info">
+            <img id="user-avatar" src="https://ui-avatars.com/api/?name=Guest&background=ef4444&color=fff" alt="User avatar" class="profile-avatar">
+            <div class="profile-details">
+              <h3 class="profile-name" id="statName">Guest</h3>
+              <p class="profile-id" id="statBellyId">ID: BP-GUEST</p>
+            </div>
+          </div>
+          
+          <div class="profile-stats">
+            <div class="stat-item">
+              <div class="stat-value" id="statPills">0</div>
+              <div class="stat-label">Obat</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value" id="statCompliance">0%</div>
+              <div class="stat-label">Kepatuhan</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value" id="statDays">0</div>
+              <div class="stat-label">Hari</div>
+            </div>
+          </div>
+          
+          <button id="logoutBtn" class="btn btn-outline" style="margin-top: var(--space-md); display: none;">
+            <i class="fas fa-sign-out-alt"></i> Keluar
+          </button>
+        </section>
+
+        <!-- Medicine Card -->
+        <section class="card" id="medicineCard">
+          <div class="card-header">
+            <h2 class="card-title">
+              <i class="fas fa-pills"></i>
+              Informasi Obat
+            </h2>
+            <button class="btn btn-outline btn-sm" id="addMedicineBtn">
+              <i class="fas fa-plus"></i> Tambah Obat
+            </button>
+          </div>
+          
+          <div class="empty-state" id="medicineEmptyState">
+            <div class="empty-state-icon">
+              <i class="fas fa-pills"></i>
+            </div>
+            <h3 class="empty-state-text">Belum ada obat yang ditambahkan</h3>
+            <button class="btn btn-primary" id="addFirstMedicineBtn">
+              <i class="fas fa-plus"></i> Tambah Obat Pertama
+            </button>
+          </div>
+          
+          <div id="medicineContent" style="display: none;">
+            <div class="medicine-info">
+              <div class="medicine-image">
+                <i class="fas fa-pills fa-2x"></i>
+              </div>
+              <div class="medicine-details">
+                <h3 class="medicine-name" id="medicineName">-</h3>
+                <p class="medicine-id" id="medicineId">ID: -</p>
+                
+                <div class="medicine-property">
+                  <i class="fas fa-tag" aria-hidden="true"></i>
+                  <span id="medicineType">-</span>
+                </div>
+                <div class="medicine-property">
+                  <i class="fas fa-heartbeat" aria-hidden="true"></i>
+                  <span id="medicineBenefit">-</span>
+                </div>
+                <div class="medicine-property">
+                  <i class="fas fa-utensils" aria-hidden="true"></i>
+                  <span id="medicineInstruction">-</span>
+                </div>
+                <div class="medicine-property">
+                  <i class="fas fa-clock" aria-hidden="true"></i>
+                  <span id="medicineFrequency">-</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="medicine-actions">
+              <button class="btn btn-primary" id="changeMedicineBtn">
+                <i class="fas fa-exchange-alt"></i> Ganti Obat
+              </button>
+              <button class="btn btn-outline" id="editMedicineBtn">
+                <i class="fas fa-edit"></i> Edit
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Schedule Card -->
+        <section class="card schedule-card" id="scheduleCard">
+          <div class="card-header">
+            <h2 class="card-title">
+              <i class="fas fa-calendar-alt"></i>
+              Jadwal Hari Ini
+            </h2>
+            <span id="currentDate">-</span>
+          </div>
+          
+          <div class="empty-state" id="scheduleEmptyState">
+            <div class="empty-state-icon">
+              <i class="fas fa-calendar-alt"></i>
+            </div>
+            <h3 class="empty-state-text">Tambahkan obat untuk melihat jadwal</h3>
+          </div>
+          
+          <div id="scheduleContent" style="display: none;">
+            <div class="compliance-meter">
+              <div class="meter-gauge">
+                <svg class="gauge-circle" viewBox="0 0 100 100">
+                  <circle class="gauge-bg" cx="50" cy="50" r="40"></circle>
+                  <circle class="gauge-progress" cx="50" cy="50" r="40"></circle>
+                </svg>
+                <div class="gauge-value" id="complianceValue">0%</div>
+              </div>
+              <div>
+                <p><strong>Kepatuhan Hari Ini</strong></p>
+                <p class="text-secondary" id="complianceText">0 dari 0 dosis</p>
+              </div>
+            </div>
+            
+            <ul class="schedule-list" id="scheduleList">
+              <!-- Schedule items will be added here dynamically -->
+            </ul>
+          </div>
+        </section>
+
+        <!-- Facts Card -->
+        <section class="card">
+          <div class="card-header">
+            <h2 class="card-title">
+              <i class="fas fa-lightbulb"></i>
+              Fakta Medis
+            </h2>
+            <span class="badge">Baru</span>
+          </div>
+          
+          <div class="fact-item highlight">
+            <h3 class="fact-title">Efektivitas Pengobatan</h3>
+            <p class="fact-content">Minum obat secara teratur bisa meningkatkan efektivitas pengobatan hingga 80% dibandingkan dengan penggunaan yang tidak teratur.</p>
+          </div>
+          
+          <div class="fact-item">
+            <h3 class="fact-title">Masalah Global</h3>
+            <p class="fact-content">WHO menyatakan kurang patuh minum obat adalah masalah kesehatan global yang mempengaruhi 50% pasien penyakit kronis.</p>
+          </div>
+          
+          <div class="fact-item">
+            <h3 class="fact-title">Kesehatan Jangka Panjang</h3>
+            <p class="fact-content">Pasien yang patuh terhadap pengobatan memiliki risiko rawat inap 30% lebih rendah dibandingkan yang tidak patuh.</p>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Login Modal -->
+  <div class="modal" id="loginModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Masuk ke Akun Anda</h2>
+        <button class="modal-close" id="closeLoginModal">&times;</button>
+      </div>
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="loginName" class="form-label">Nama Lengkap</label>
+          <input type="text" id="loginName" class="form-input" placeholder="Masukkan nama Anda" required>
+        </div>
+        <div class="form-group">
+          <label for="loginBellyId" class="form-label">ID BellyPlus</label>
+          <input type="text" id="loginBellyId" class="form-input" placeholder="Contoh: BP-XXXXXX" required>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Masuk</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- Add Medicine Modal -->
+  <div class="modal" id="medicineModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="medicineModalTitle">Tambah Obat Baru</h2>
+        <button class="modal-close" id="closeMedicineModal">&times;</button>
+      </div>
+      <form id="medicineForm">
+        <input type="hidden" id="medicineEditId">
+        <div class="form-group">
+          <label for="medicineNameInput" class="form-label">Nama Obat</label>
+          <input type="text" id="medicineNameInput" class="form-input" placeholder="Contoh: Parasetamol 500mg" required>
+        </div>
+        <div class="form-group">
+          <label for="medicineTypeInput" class="form-label">Jenis Obat</label>
+          <input type="text" id="medicineTypeInput" class="form-input" placeholder="Contoh: Analgesik & Antipiretik" required>
+        </div>
+        <div class="form-group">
+          <label for="medicineBenefitInput" class="form-label">Manfaat</label>
+          <input type="text" id="medicineBenefitInput" class="form-input" placeholder="Contoh: Mengurangi demam dan nyeri" required>
+        </div>
+        <div class="form-group">
+          <label for="medicineInstructionInput" class="form-label">Petunjuk Minum</label>
+          <input type="text" id="medicineInstructionInput" class="form-input" placeholder="Contoh: Sesudah makan" required>
+        </div>
+        <div class="form-group">
+          <label for="medicineFrequencyInput" class="form-label">Frekuensi</label>
+          <select id="medicineFrequencyInput" class="form-select" required>
+            <option value="">Pilih frekuensi</option>
+            <option value="1">1x sehari</option>
+            <option value="2">2x sehari (Pagi & Malam)</option>
+            <option value="3">3x sehari (Pagi, Siang, Malam)</option>
+            <option value="4">4x sehari (Pagi, Siang, Sore, Malam)</option>
+          </select>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-outline" id="cancelMedicineBtn">Batal</button>
+          <button type="submit" class="btn btn-primary" id="saveMedicineBtn">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- Select Medicine Modal -->
+  <div class="modal" id="selectMedicineModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Pilih Obat</h2>
+        <button class="modal-close" id="closeSelectMedicineModal">&times;</button>
+      </div>
+      <div id="medicineListContainer">
+        <p>Memuat daftar obat...</p>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-primary" id="addNewMedicineFromListBtn">
+          <i class="fas fa-plus"></i> Tambah Obat Baru
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // DOM Elements
+    const loginModal = document.getElementById('loginModal');
+    const closeLoginModal = document.getElementById('closeLoginModal');
+    const loginForm = document.getElementById('loginForm');
+    const loginBtn = document.querySelector('.log-in');
+    const userControls = document.getElementById('userControls');
+    const logoutBtn = document.getElementById('logoutBtn');
+    
+    const medicineModal = document.getElementById('medicineModal');
+    const closeMedicineModal = document.getElementById('closeMedicineModal');
+    const medicineForm = document.getElementById('medicineForm');
+    const addMedicineBtn = document.getElementById('addMedicineBtn');
+    const addFirstMedicineBtn = document.getElementById('addFirstMedicineBtn');
+    const changeMedicineBtn = document.getElementById('changeMedicineBtn');
+    const editMedicineBtn = document.getElementById('editMedicineBtn');
+    const medicineEmptyState = document.getElementById('medicineEmptyState');
+    const medicineContent = document.getElementById('medicineContent');
+    
+    const selectMedicineModal = document.getElementById('selectMedicineModal');
+    const closeSelectMedicineModal = document.getElementById('closeSelectMedicineModal');
+    const medicineListContainer = document.getElementById('medicineListContainer');
+    const addNewMedicineFromListBtn = document.getElementById('addNewMedicineFromListBtn');
+    
+    const scheduleEmptyState = document.getElementById('scheduleEmptyState');
+    const scheduleContent = document.getElementById('scheduleContent');
+    const scheduleList = document.getElementById('scheduleList');
+    const currentDateElement = document.getElementById('currentDate');
+    const complianceValue = document.getElementById('complianceValue');
+    const complianceText = document.getElementById('complianceText');
+    
+    const statName = document.getElementById('statName');
+    const statBellyId = document.getElementById('statBellyId');
+    const statPills = document.getElementById('statPills');
+    const statCompliance = document.getElementById('statCompliance');
+    const statDays = document.getElementById('statDays');
+    const userAvatar = document.getElementById('user-avatar');
+    
+    // State
+    let currentUser = null;
+    let medicines = [];
+    let selectedMedicineId = null;
+    let completedDoses = [];
+    let startDate = null;
+    
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      // Load data from localStorage
+      const storedUser = localStorage.getItem('currentUser');
+      const storedMedicines = localStorage.getItem('medicines');
+      const storedSelectedMedicine = localStorage.getItem('selectedMedicineId');
+      const storedCompletedDoses = localStorage.getItem('completedDoses');
+      const storedStartDate = localStorage.getItem('startDate');
+      
+      if (storedUser) {
+        currentUser = JSON.parse(storedUser);
+        renderLoggedInUI(currentUser);
+      }
+      
+      if (storedMedicines) {
+        medicines = JSON.parse(storedMedicines);
+        statPills.textContent = medicines.length;
+      }
+      
+      if (storedSelectedMedicine) {
+        selectedMedicineId = storedSelectedMedicine;
+        const selectedMed = medicines.find(m => m.id === selectedMedicineId);
+        if (selectedMed) {
+          renderMedicineInfo(selectedMed);
+          renderSchedule(selectedMed);
+          medicineEmptyState.style.display = 'none';
+          medicineContent.style.display = 'block';
+          scheduleEmptyState.style.display = 'none';
+          scheduleContent.style.display = 'block';
+        }
+      }
+      
+      if (storedCompletedDoses) {
+        completedDoses = JSON.parse(storedCompletedDoses);
+      }
+      
+      if (storedStartDate) {
+        startDate = new Date(storedStartDate);
+        updateDaysCount();
+      }
+      
+      // Set current date
+      updateCurrentDate();
+    });
+    
+    // Login/Logout functionality
+    loginBtn?.addEventListener('click', () => {
+      loginModal.classList.add('show');
+    });
+    
+    closeLoginModal.addEventListener('click', () => {
+      loginModal.classList.remove('show');
+    });
+    
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('loginName').value;
+      const bellyId = document.getElementById('loginBellyId').value;
+      
+      currentUser = {
+        name: name || "Anonymous",
+        bellyId: bellyId || "BP-" + Math.floor(100000 + Math.random() * 900000)
+      };
+      
+      localStorage.setItem('currentUser', JSON.stringify(currentUser));
+      renderLoggedInUI(currentUser);
+      loginModal.classList.remove('show');
+      loginForm.reset();
+      
+      // Initialize start date if not set
+      if (!startDate) {
+        startDate = new Date();
+        localStorage.setItem('startDate', startDate.toISOString());
+        updateDaysCount();
+      }
+    });
+    
+    logoutBtn.addEventListener('click', () => {
+      currentUser = null;
+      localStorage.removeItem('currentUser');
+      resetUI();
+    });
+    
+    function renderLoggedInUI(user) {
+      userControls.innerHTML = `
+        <div class="user-profile" style="display: flex; align-items: center; gap: 0.5rem;">
+          <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=ef4444&color=fff&rounded=true&size=40" 
+               alt="${user.name}" style="border-radius: 50%; width: 40px; height: 40px;">
+          <div>
+            <div style="font-weight: 600;">${user.name}</div>
+            <div style="font-size: 0.8rem; color: var(--text-secondary);">${user.bellyId}</div>
+          </div>
+        </div>
+      `;
+      
+      statName.textContent = user.name;
+      statBellyId.textContent = `ID: ${user.bellyId}`;
+      userAvatar.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=ef4444&color=fff&rounded=true&size=64`;
+      
+      logoutBtn.style.display = 'block';
+    }
+    
+    function resetUI() {
+      userControls.innerHTML = `
+        <button class="btn btn-outline log-in">
+          <i class="fas fa-user"></i> Log In
+        </button>
+      `;
+      
+      statName.textContent = "Guest";
+      statBellyId.textContent = "ID: BP-GUEST";
+      userAvatar.src = "https://ui-avatars.com/api/?name=Guest&background=ef4444&color=fff&rounded=true&size=64";
+      
+      logoutBtn.style.display = 'none';
+      
+      // Re-attach login listener
+      document.querySelector('.log-in').addEventListener('click', () => {
+        loginModal.classList.add('show');
+      });
+    }
+    
+    // Medicine functionality
+    addMedicineBtn.addEventListener('click', () => {
+      document.getElementById('medicineModalTitle').textContent = "Tambah Obat Baru";
+      medicineForm.reset();
+      document.getElementById('medicineEditId').value = '';
+      medicineModal.classList.add('show');
+    });
+    
+    addFirstMedicineBtn.addEventListener('click', () => {
+      document.getElementById('medicineModalTitle').textContent = "Tambah Obat Pertama";
+      medicineForm.reset();
+      document.getElementById('medicineEditId').value = '';
+      medicineModal.classList.add('show');
+    });
+    
+    changeMedicineBtn.addEventListener('click', () => {
+      renderMedicineList();
+      selectMedicineModal.classList.add('show');
+    });
+    
+    editMedicineBtn.addEventListener('click', () => {
+      const medicine = medicines.find(m => m.id === selectedMedicineId);
+      if (medicine) {
+        document.getElementById('medicineModalTitle').textContent = "Edit Obat";
+        document.getElementById('medicineNameInput').value = medicine.name;
+        document.getElementById('medicineTypeInput').value = medicine.type;
+        document.getElementById('medicineBenefitInput').value = medicine.benefit;
+        document.getElementById('medicineInstructionInput').value = medicine.instruction;
+        document.getElementById('medicineFrequencyInput').value = medicine.frequency;
+        document.getElementById('medicineEditId').value = medicine.id;
+        medicineModal.classList.add('show');
+      }
+    });
+    
+    closeMedicineModal.addEventListener('click', () => {
+      medicineModal.classList.remove('show');
+    });
+    
+    cancelMedicineBtn.addEventListener('click', () => {
+      medicineModal.classList.remove('show');
+    });
+    
+    medicineForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const id = document.getElementById('medicineEditId').value || Date.now().toString();
+      const name = document.getElementById('medicineNameInput').value;
+      const type = document.getElementById('medicineTypeInput').value;
+      const benefit = document.getElementById('medicineBenefitInput').value;
+      const instruction = document.getElementById('medicineInstructionInput').value;
+      const frequency = document.getElementById('medicineFrequencyInput').value;
+      
+      const medicine = {
+        id,
+        name,
+        type,
+        benefit,
+        instruction,
+        frequency: parseInt(frequency)
+      };
+      
+      // If editing, find and update
+      if (document.getElementById('medicineEditId').value) {
+        const index = medicines.findIndex(m => m.id === id);
+        if (index !== -1) {
+          medicines[index] = medicine;
+        }
+      } else {
+        // Add new medicine
+        medicines.push(medicine);
+        statPills.textContent = medicines.length;
+      }
+      
+      // Save to localStorage
+      localStorage.setItem('medicines', JSON.stringify(medicines));
+      
+      // Select this medicine
+      selectedMedicineId = id;
+      localStorage.setItem('selectedMedicineId', id);
+      
+      // Render the medicine info and schedule
+      renderMedicineInfo(medicine);
+      renderSchedule(medicine);
+      
+      // Hide empty states
+      medicineEmptyState.style.display = 'none';
+      medicineContent.style.display = 'block';
+      scheduleEmptyState.style.display = 'none';
+      scheduleContent.style.display = 'block';
+      
+      // Close modal
+      medicineModal.classList.remove('show');
+    });
+    
+    function renderMedicineInfo(medicine) {
+      document.getElementById('medicineName').textContent = medicine.name;
+      document.getElementById('medicineId').textContent = `ID: ${medicine.id.slice(0, 8)}`;
+      document.getElementById('medicineType').textContent = medicine.type;
+      document.getElementById('medicineBenefit').textContent = medicine.benefit;
+      document.getElementById('medicineInstruction').textContent = medicine.instruction;
+      
+      let frequencyText = '';
+      switch (medicine.frequency) {
+        case 1:
+          frequencyText = '1x sehari (Pagi)';
+          break;
+        case 2:
+          frequencyText = '2x sehari (Pagi & Malam)';
+          break;
+        case 3:
+          frequencyText = '3x sehari (Pagi, Siang, Malam)';
+          break;
+        case 4:
+          frequencyText = '4x sehari (Pagi, Siang, Sore, Malam)';
+          break;
+        default:
+          frequencyText = '1x sehari';
+      }
+      document.getElementById('medicineFrequency').textContent = frequencyText;
+    }
+    
+    function renderMedicineList() {
+      if (medicines.length === 0) {
+        medicineListContainer.innerHTML = '<p>Belum ada obat yang ditambahkan</p>';
+        return;
+      }
+      
+      let html = '<div class="medicine-list" style="display: flex; flex-direction: column; gap: 0.5rem;">';
+      medicines.forEach(medicine => {
+        html += `
+          <div class="medicine-item" style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; background-color: var(--bg-primary); border-radius: var(--rounded);">
+            <div>
+              <div style="font-weight: 600;">${medicine.name}</div>
+              <div style="font-size: 0.8rem; color: var(--text-secondary);">${medicine.type}</div>
+            </div>
+            <button class="btn btn-primary select-medicine-btn" data-id="${medicine.id}" style="padding: 0.25rem 0.5rem;">
+              Pilih
+            </button>
+          </div>
+        `;
+      });
+      html += '</div>';
+      
+      medicineListContainer.innerHTML = html;
+      
+      // Add event listeners to select buttons
+      document.querySelectorAll('.select-medicine-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const medicineId = btn.getAttribute('data-id');
+          const medicine = medicines.find(m => m.id === medicineId);
+          if (medicine) {
+            selectedMedicineId = medicineId;
+            localStorage.setItem('selectedMedicineId', medicineId);
+            renderMedicineInfo(medicine);
+            renderSchedule(medicine);
+            selectMedicineModal.classList.remove('show');
+          }
+        });
+      });
+    }
+    
+    closeSelectMedicineModal.addEventListener('click', () => {
+      selectMedicineModal.classList.remove('show');
+    });
+    
+    addNewMedicineFromListBtn.addEventListener('click', () => {
+      selectMedicineModal.classList.remove('show');
+      document.getElementById('medicineModalTitle').textContent = "Tambah Obat Baru";
+      medicineForm.reset();
+      document.getElementById('medicineEditId').value = '';
+      medicineModal.classList.add('show');
+    });
+    
+    // Schedule functionality
+    function updateCurrentDate() {
+      const now = new Date();
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      currentDateElement.textContent = now.toLocaleDateString('id-ID', options);
+    }
+    
+    function updateDaysCount() {
+      if (startDate) {
+        const today = new Date();
+        const diffTime = Math.abs(today - startDate);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        statDays.textContent = diffDays;
+      }
+    }
+    
+    function renderSchedule(medicine) {
+      if (!medicine) return;
+      
+      // Clear existing schedule
+      scheduleList.innerHTML = '';
+      
+      // Generate schedule based on frequency
+      const now = new Date();
+      const today = now.toISOString().split('T')[0];
+      const timeSlots = [];
+      
+      // Get completed doses for today
+      const todayCompleted = completedDoses.filter(d => d.date === today && d.medicineId === medicine.id);
+      
+      switch (medicine.frequency) {
+        case 1: // Once a day (morning)
+          timeSlots.push({ time: '08:00', period: 'morning', icon: 'sun' });
+          break;
+        case 2: // Twice a day (morning and evening)
+          timeSlots.push({ time: '08:00', period: 'morning', icon: 'sun' });
+          timeSlots.push({ time: '20:00', period: 'night', icon: 'moon' });
+          break;
+        case 3: // Three times a day (morning, afternoon, evening)
+          timeSlots.push({ time: '08:00', period: 'morning', icon: 'sun' });
+          timeSlots.push({ time: '13:00', period: 'afternoon', icon: 'cloud-sun' });
+          timeSlots.push({ time: '20:00', period: 'night', icon: 'moon' });
+          break;
+        case 4: // Four times a day (morning, afternoon, evening, night)
+          timeSlots.push({ time: '08:00', period: 'morning', icon: 'sun' });
+          timeSlots.push({ time: '12:00', period: 'afternoon', icon: 'cloud-sun' });
+          timeSlots.push({ time: '16:00', period: 'evening', icon: 'cloud-moon' });
+          timeSlots.push({ time: '20:00', period: 'night', icon: 'moon' });
+          break;
+      }
+      
+      // Calculate current time for status
+      const currentHour = now.getHours();
+      const currentMinute = now.getMinutes();
+      const currentTime = currentHour * 60 + currentMinute;
+      
+      // Calculate compliance
+      let completedCount = 0;
+      
+      // Render each time slot
+      timeSlots.forEach(slot => {
+        const [hour, minute] = slot.time.split(':').map(Number);
+        const slotTime = hour * 60 + minute;
+        const isCompleted = todayCompleted.some(d => d.time === slot.time);
+        const isUpcoming = !isCompleted && slotTime > currentTime;
+        const isMissed = !isCompleted && slotTime < currentTime - 30; // 30 minutes grace period
+        
+        if (isCompleted) completedCount++;
+        
+        const statusClass = isCompleted ? 'status-completed' : 
+                          isUpcoming ? 'status-upcoming' : 
+                          isMissed ? 'status-missed' : '';
+        
+        const statusText = isCompleted ? 'Selesai' : 
+                          isUpcoming ? 'Akan datang' : 
+                          isMissed ? 'Terlewat' : 'Dalam 15 menit';
+        
+        const iconClass = `${slot.period}-icon`;
+        
+        const li = document.createElement('li');
+        li.className = 'schedule-item';
+        li.innerHTML = `
+          <div class="schedule-time">
+            <span class="time-icon ${iconClass}">
+              <i class="fas fa-${slot.icon}"></i>
+            </span>
+            <span>${slot.time}</span>
+          </div>
+          <div class="schedule-details">
+            <p class="schedule-status ${statusClass}">${statusText}</p>
+          </div>
+          <div class="schedule-action">
+            ${isCompleted ? 
+              `<i class="fas fa-check-circle" style="color: var(--success-500);"></i>` : 
+              `<button class="btn btn-outline complete-dose-btn" data-time="${slot.time}" style="padding: 0.25rem 0.5rem;">
+                <i class="fas fa-check"></i> Selesai
+              </button>`
+            }
+          </div>
+        `;
+        
+        scheduleList.appendChild(li);
+      });
+      
+      // Add event listeners to complete buttons
+      document.querySelectorAll('.complete-dose-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const time = btn.getAttribute('data-time');
+          completeDose(medicine.id, time);
+        });
+      });
+      
+      // Update compliance
+      const compliancePercentage = Math.round((completedCount / timeSlots.length) * 100);
+      complianceValue.textContent = `${compliancePercentage}%`;
+      complianceText.textContent = `${completedCount} dari ${timeSlots.length} dosis`;
+      statCompliance.textContent = `${compliancePercentage}%`;
+      
+      // Update gauge
+      const gaugeProgress = document.querySelector('.gauge-progress');
+      const offset = 251 - (251 * (compliancePercentage / 100));
+      gaugeProgress.style.strokeDashoffset = offset;
+    }
+    
+    function completeDose(medicineId, time) {
+      const today = new Date().toISOString().split('T')[0];
+      
+      // Add to completed doses
+      completedDoses.push({
+        medicineId,
+        date: today,
+        time,
+        completedAt: new Date().toISOString()
+      });
+      
+      // Save to localStorage
+      localStorage.setItem('completedDoses', JSON.stringify(completedDoses));
+      
+      // Re-render schedule
+      const medicine = medicines.find(m => m.id === medicineId);
+      if (medicine) {
+        renderSchedule(medicine);
+      }
+    }
+    
+    // Update days count daily
+    setInterval(updateDaysCount, 1000 * 60 * 60); // Check every hour
+  </script>
+</body>
+</html>

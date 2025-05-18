@@ -371,23 +371,13 @@ body {
 
     /* Logo */
     .logo {
-        width: 80px;
-    }
-
-    /* Search Bar - Hide on mobile */
-    #search-desktop {
         display: none;
     }
-    .search-mobile {
-      display: flex;
-    }
-    #search-android {
-      display: flex;
+    .search-input {
       width: 200px;
-      margin-top: 15px;
     }
-    .search-results {
-      margin-top: 70px;
+    .search-input:focus {
+      width: 250px;
     }
 
     /* Burger Menu */
