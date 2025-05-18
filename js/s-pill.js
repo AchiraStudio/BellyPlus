@@ -6,6 +6,7 @@ const addMedicineBtn = document.getElementById('addMedicineBtn');
 const addFirstMedicineBtn = document.getElementById('addFirstMedicineBtn');
 const changeMedicineBtn = document.getElementById('changeMedicineBtn');
 const editMedicineBtn = document.getElementById('editMedicineBtn');
+const deleteMedicineBtn = document.getElementById('deleteMedicineBtn');
 const medicineEmptyState = document.getElementById('medicineEmptyState');
 const medicineContent = document.getElementById('medicineContent');
 const selectMedicineModal = document.getElementById('selectMedicineModal');
@@ -25,22 +26,68 @@ const statCompliance = document.getElementById('statCompliance');
 const statDays = document.getElementById('statDays');
 const userAvatar = document.getElementById('user-avatar');
 const cancelMedicineBtn = document.getElementById('cancelMedicineBtn');
+const historyModal = document.getElementById('historyModal');
+const closeHistoryModal = document.getElementById('closeHistoryModal');
+const historyList = document.getElementById('historyList');
+const viewHistoryBtn = document.getElementById('viewHistoryBtn');
+const medicalFactElement = document.getElementById('medicalFact');
 
 // State
 let medicines = [];
 let selectedMedicineId = null;
 let completedDoses = [];
 let startDate = null;
+let dailySchedules = {};
+let medicineHistory = [];
+let notificationTimeoutIds = [];
+
+const medicineDatabase = {
+  'Paracetamol': {
+    type: 'Tablet',
+    benefit: 'Mengurangi demam dan nyeri ringan hingga sedang',
+    instruction: 'Diminum setelah makan. Jangan melebihi dosis harian yang dianjurkan.'
+  },
+  'Amoxicillin': {
+    type: 'Kapsul',
+    benefit: 'Antibiotik untuk infeksi bakteri',
+    instruction: 'Harus dihabiskan sesuai resep dokter. Minum dengan air putih.'
+  },
+  'Omeprazole': {
+    type: 'Kapsul',
+    benefit: 'Mengurangi asam lambung',
+    instruction: 'Diminum 30 menit sebelum makan pagi.'
+  },
+  'Vitamin C': {
+    type: 'Tablet kunyah',
+    benefit: 'Meningkatkan daya tahan tubuh',
+    instruction: 'Diminum setelah makan. Bisa dikunyah atau ditelan.'
+  }
+};
+
+const medicalFacts = [
+  "Minum obat tepat waktu meningkatkan efektivitas pengobatan hingga 30%",
+  "Antibiotik harus dihabiskan sesuai resep meskipun gejala sudah membaik",
+  "Interaksi obat dengan grapefruit bisa berbahaya untuk beberapa jenis obat",
+  "Obat penurun demam bekerja optimal bila diminum dengan air hangat",
+  "Jangan mencampur obat dengan minuman berkafein tanpa konsultasi dokter",
+  "Simpan obat di tempat sejuk dan kering, hindari paparan sinar matahari langsung",
+  "Obat kadaluarsa bisa kehilangan efektivitas atau menjadi berbahaya"
+];
 
 // Initialize the application
 function initApp() {
-  // Hide modals by default
-  if (medicineModal) medicineModal.classList.remove('show');
-  if (selectMedicineModal) selectMedicineModal.classList.remove('show');
+  medicineModal.classList.remove('show');
+  selectMedicineModal.classList.remove('show');
+  historyModal.classList.remove('show');
   
   loadFromLocalStorage();
   updateCurrentDate();
   initButtons();
+  showRandomMedicalFact();
+  setupNotificationPermission();
+  
+  // Check for missed doses from previous days
+  checkMissedDoses();
 }
 
 // Load data from localStorage
@@ -49,77 +96,49 @@ function loadFromLocalStorage() {
   const storedSelectedMedicine = localStorage.getItem('selectedMedicineId');
   const storedCompletedDoses = localStorage.getItem('completedDoses');
   const storedStartDate = localStorage.getItem('startDate');
+  const storedDailySchedules = localStorage.getItem('dailySchedules');
+  const storedMedicineHistory = localStorage.getItem('medicineHistory');
 
-  if (storedMedicines) {
-    medicines = JSON.parse(storedMedicines);
-    if (statPills) statPills.textContent = medicines.length;
-  }
+  if (storedMedicines) medicines = JSON.parse(storedMedicines);
+  if (storedSelectedMedicine) selectedMedicineId = storedSelectedMedicine;
+  if (storedCompletedDoses) completedDoses = JSON.parse(storedCompletedDoses);
+  if (storedDailySchedules) dailySchedules = JSON.parse(storedDailySchedules);
+  if (storedMedicineHistory) medicineHistory = JSON.parse(storedMedicineHistory);
 
-  if (storedSelectedMedicine) {
-    selectedMedicineId = storedSelectedMedicine;
-    const selectedMed = medicines.find(m => m.id === selectedMedicineId);
-    if (selectedMed) {
-      showMedicineContent(selectedMed);
-    }
-  }
+  startDate = storedStartDate ? new Date(storedStartDate) : new Date();
+  if (!storedStartDate) localStorage.setItem('startDate', startDate.toISOString());
 
-  if (storedCompletedDoses) {
-    completedDoses = JSON.parse(storedCompletedDoses);
-  }
-
-  if (storedStartDate) {
-    startDate = new Date(storedStartDate);
-  } else {
-    startDate = new Date();
-    localStorage.setItem('startDate', startDate.toISOString());
-  }
+  if (statPills) statPills.textContent = medicines.length;
   updateDaysCount();
+
+  const selectedMed = medicines.find(m => m.id === selectedMedicineId);
+  if (selectedMed) showMedicineContent(selectedMed);
 }
 
 // Initialize all button event listeners
 function initButtons() {
   // Medicine management buttons
-  if (addMedicineBtn) {
-    addMedicineBtn.addEventListener('click', openAddMedicineModal);
-  }
-
-  if (addFirstMedicineBtn) {
-    addFirstMedicineBtn.addEventListener('click', openAddMedicineModal);
-  }
-
-  if (changeMedicineBtn) {
-    changeMedicineBtn.addEventListener('click', openMedicineSelectionModal);
-  }
-
-  if (editMedicineBtn) {
-    editMedicineBtn.addEventListener('click', openEditMedicineModal);
-  }
+  if (addMedicineBtn) addMedicineBtn.addEventListener('click', openAddMedicineModal);
+  if (addFirstMedicineBtn) addFirstMedicineBtn.addEventListener('click', openAddMedicineModal);
+  if (changeMedicineBtn) changeMedicineBtn.addEventListener('click', openMedicineSelectionModal);
+  if (editMedicineBtn) editMedicineBtn.addEventListener('click', openEditMedicineModal);
+  if (deleteMedicineBtn) deleteMedicineBtn.addEventListener('click', deleteCurrentMedicine);
+  if (viewHistoryBtn) viewHistoryBtn.addEventListener('click', openHistoryModal);
 
   // Modal control buttons
-  if (closeMedicineModal) {
-    closeMedicineModal.addEventListener('click', () => medicineModal.classList.remove('show'));
-  }
-
-  if (closeSelectMedicineModal) {
-    closeSelectMedicineModal.addEventListener('click', () => selectMedicineModal.classList.remove('show'));
-  }
-
-  if (cancelMedicineBtn) {
-    cancelMedicineBtn.addEventListener('click', () => medicineModal.classList.remove('show'));
-  }
+  if (closeMedicineModal) closeMedicineModal.addEventListener('click', () => medicineModal.classList.remove('show'));
+  if (closeSelectMedicineModal) closeSelectMedicineModal.addEventListener('click', () => selectMedicineModal.classList.remove('show'));
+  if (closeHistoryModal) closeHistoryModal.addEventListener('click', () => historyModal.classList.remove('show'));
+  if (cancelMedicineBtn) cancelMedicineBtn.addEventListener('click', () => medicineModal.classList.remove('show'));
 
   // Form submission
-  if (medicineForm) {
-    medicineForm.addEventListener('submit', handleMedicineFormSubmit);
-  }
+  if (medicineForm) medicineForm.addEventListener('submit', handleMedicineFormSubmit);
 
   // Add new medicine from list button
-  if (addNewMedicineFromListBtn) {
-    addNewMedicineFromListBtn.addEventListener('click', () => {
-      selectMedicineModal.classList.remove('show');
-      openAddMedicineModal();
-    });
-  }
+  if (addNewMedicineFromListBtn) addNewMedicineFromListBtn.addEventListener('click', () => {
+    selectMedicineModal.classList.remove('show');
+    openAddMedicineModal();
+  });
 }
 
 // Medicine Modal Functions
@@ -140,9 +159,6 @@ function openEditMedicineModal() {
   if (medicine) {
     document.getElementById('medicineModalTitle').textContent = "Edit Obat";
     document.getElementById('medicineNameInput').value = medicine.name;
-    document.getElementById('medicineTypeInput').value = medicine.type;
-    document.getElementById('medicineBenefitInput').value = medicine.benefit;
-    document.getElementById('medicineInstructionInput').value = medicine.instruction;
     document.getElementById('medicineFrequencyInput').value = medicine.frequency;
     document.getElementById('medicineEditId').value = medicine.id;
     medicineModal.classList.add('show');
@@ -156,23 +172,32 @@ function openMedicineSelectionModal() {
   selectMedicineModal.classList.add('show');
 }
 
+function openHistoryModal() {
+  if (!historyModal) return;
+  
+  renderHistoryList();
+  historyModal.classList.add('show');
+}
+
 function handleMedicineFormSubmit(e) {
   e.preventDefault();
   
   const id = document.getElementById('medicineEditId').value || Date.now().toString();
   const name = document.getElementById('medicineNameInput').value;
-  const type = document.getElementById('medicineTypeInput').value;
-  const benefit = document.getElementById('medicineBenefitInput').value;
-  const instruction = document.getElementById('medicineInstructionInput').value;
   const frequency = document.getElementById('medicineFrequencyInput').value;
+  
+  // Auto-fill medicine details from database
+  const medicineDetails = medicineDatabase[name] || {
+    type: 'Tablet',
+    benefit: 'Obat untuk mengatasi gejala yang dialami',
+    instruction: 'Diminum sesuai petunjuk dokter'
+  };
   
   const medicine = {
     id,
     name,
-    type,
-    benefit,
-    instruction,
-    frequency: parseInt(frequency)
+    frequency: parseInt(frequency),
+    ...medicineDetails
   };
   
   // Update or add medicine
@@ -182,6 +207,14 @@ function handleMedicineFormSubmit(e) {
   } else {
     medicines.push(medicine);
     if (statPills) statPills.textContent = medicines.length;
+    
+    // Add to history
+    medicineHistory.push({
+      action: 'added',
+      medicine,
+      date: new Date().toISOString()
+    });
+    saveMedicineHistory();
   }
   
   saveMedicines();
@@ -192,6 +225,41 @@ function handleMedicineFormSubmit(e) {
   showMedicineContent(medicine);
   
   medicineModal.classList.remove('show');
+}
+
+function deleteCurrentMedicine() {
+  if (!selectedMedicineId) return;
+  
+  const confirmDelete = confirm("Apakah Anda yakin ingin menghapus obat ini?");
+  if (!confirmDelete) return;
+  
+  // Add to history before deleting
+  const medicine = medicines.find(m => m.id === selectedMedicineId);
+  if (medicine) {
+    medicineHistory.push({
+      action: 'deleted',
+      medicine,
+      date: new Date().toISOString()
+    });
+    saveMedicineHistory();
+  }
+  
+  medicines = medicines.filter(m => m.id !== selectedMedicineId);
+  selectedMedicineId = null;
+  localStorage.removeItem('selectedMedicineId');
+  
+  if (statPills) statPills.textContent = medicines.length;
+  saveMedicines();
+  
+  // Update UI
+  if (medicines.length === 0) {
+    if (medicineEmptyState) medicineEmptyState.style.display = 'block';
+    if (medicineContent) medicineContent.style.display = 'none';
+    if (scheduleEmptyState) scheduleEmptyState.style.display = 'block';
+    if (scheduleContent) scheduleContent.style.display = 'none';
+  } else {
+    openMedicineSelectionModal();
+  }
 }
 
 // Medicine List Functions
@@ -236,6 +304,59 @@ function renderMedicineList() {
   });
 }
 
+function renderHistoryList() {
+  if (!historyList) return;
+  
+  if (medicineHistory.length === 0) {
+    historyList.innerHTML = '<p>Belum ada riwayat obat</p>';
+    return;
+  }
+  
+  let html = '<div class="history-list" style="display: flex; flex-direction: column; gap: 0.5rem;">';
+  medicineHistory.slice().reverse().forEach(entry => {
+    const date = new Date(entry.date);
+    const dateStr = date.toLocaleDateString('id-ID', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+    
+    const actionText = entry.action === 'added' ? 'Ditambahkan' : 
+                      entry.action === 'deleted' ? 'Dihapus' : 
+                      entry.action === 'completed' ? 'Dosis selesai' : 'Diubah';
+    
+    html += `
+      <div class="history-item" style="padding: 0.75rem; background-color: var(--bg-primary); border-radius: var(--rounded);">
+        <div style="display: flex; justify-content: space-between;">
+          <div style="font-weight: 600;">${entry.medicine.name}</div>
+          <div style="font-size: 0.8rem; color: var(--text-secondary);">${dateStr}</div>
+        </div>
+        <div style="font-size: 0.9rem; margin-top: 0.25rem;">
+          <span class="badge ${getHistoryBadgeClass(entry.action)}">${actionText}</span>
+          ${entry.action === 'completed' ? `pukul ${entry.time}` : ''}
+        </div>
+        <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.25rem;">
+          Frekuensi: ${entry.medicine.frequency}x sehari
+        </div>
+      </div>
+    `;
+  });
+  html += '</div>';
+  
+  historyList.innerHTML = html;
+}
+
+function getHistoryBadgeClass(action) {
+  switch (action) {
+    case 'added': return 'bg-success';
+    case 'deleted': return 'bg-danger';
+    case 'completed': return 'bg-primary';
+    default: return 'bg-secondary';
+  }
+}
+
 // Show medicine content and schedule
 function showMedicineContent(medicine) {
   renderMedicineInfo(medicine);
@@ -244,6 +365,9 @@ function showMedicineContent(medicine) {
   if (medicineContent) medicineContent.style.display = 'block';
   if (scheduleEmptyState) scheduleEmptyState.style.display = 'none';
   if (scheduleContent) scheduleContent.style.display = 'block';
+  
+  // Schedule notifications for this medicine
+  scheduleNotifications(medicine);
 }
 
 function renderMedicineInfo(medicine) {
@@ -266,20 +390,11 @@ function renderMedicineInfo(medicine) {
 
   let frequencyText = '';
   switch (medicine.frequency) {
-    case 1:
-      frequencyText = '1x sehari (Pagi)';
-      break;
-    case 2:
-      frequencyText = '2x sehari (Pagi & Malam)';
-      break;
-    case 3:
-      frequencyText = '3x sehari (Pagi, Siang, Malam)';
-      break;
-    case 4:
-      frequencyText = '4x sehari (Pagi, Siang, Sore, Malam)';
-      break;
-    default:
-      frequencyText = `${medicine.frequency}x sehari`;
+    case 1: frequencyText = '1x sehari (Pagi)'; break;
+    case 2: frequencyText = '2x sehari (Pagi & Malam)'; break;
+    case 3: frequencyText = '3x sehari (Pagi, Siang, Malam)'; break;
+    case 4: frequencyText = '4x sehari (Pagi, Siang, Sore, Malam)'; break;
+    default: frequencyText = `${medicine.frequency}x sehari`;
   }
 
   if (document.getElementById('medicineFrequency')) 
@@ -307,13 +422,21 @@ function updateDaysCount() {
 function renderSchedule(medicine) {
   if (!medicine || !scheduleList) return;
   
+  const today = new Date().toISOString().split('T')[0];
+  
+  // Initialize today's schedule if not exists
+  if (!dailySchedules[today]) {
+    dailySchedules[today] = {
+      date: today,
+      medicineId: medicine.id,
+      completed: []
+    };
+    saveDailySchedules();
+  }
+  
   scheduleList.innerHTML = '';
   const now = new Date();
-  const today = now.toISOString().split('T')[0];
   const timeSlots = [];
-  
-  // Get completed doses for today
-  const todayCompleted = completedDoses.filter(d => d.date === today && d.medicineId === medicine.id);
   
   // Create time slots based on frequency
   switch (medicine.frequency) {
@@ -341,17 +464,15 @@ function renderSchedule(medicine) {
   const currentTime = currentHour * 60 + currentMinute;
   
   // Calculate compliance
-  let completedCount = 0;
+  let completedCount = dailySchedules[today]?.completed.length || 0;
   
   // Render each time slot
   timeSlots.forEach(slot => {
     const [hour, minute] = slot.time.split(':').map(Number);
     const slotTime = hour * 60 + minute;
-    const isCompleted = todayCompleted.some(d => d.time === slot.time);
+    const isCompleted = dailySchedules[today]?.completed.includes(slot.time);
     const isUpcoming = !isCompleted && slotTime > currentTime;
     const isMissed = !isCompleted && slotTime < currentTime - 30; // 30 minutes grace period
-    
-    if (isCompleted) completedCount++;
     
     const statusClass = isCompleted ? 'status-completed' : 
                       isUpcoming ? 'status-upcoming' : 
@@ -400,18 +521,67 @@ function renderSchedule(medicine) {
 
 function completeDose(medicineId, time) {
   const today = new Date().toISOString().split('T')[0];
-  
-  completedDoses.push({
-    medicineId,
-    date: today,
-    time,
-    completedAt: new Date().toISOString()
-  });
-  
-  saveCompletedDoses();
-  
   const medicine = medicines.find(m => m.id === medicineId);
-  if (medicine) renderSchedule(medicine);
+  
+  if (!dailySchedules[today]) {
+    dailySchedules[today] = {
+      date: today,
+      medicineId,
+      completed: []
+    };
+  }
+  
+  if (!dailySchedules[today].completed.includes(time)) {
+    dailySchedules[today].completed.push(time);
+    saveDailySchedules();
+    
+    // Add to history
+    medicineHistory.push({
+      action: 'completed',
+      medicine,
+      time,
+      date: new Date().toISOString()
+    });
+    saveMedicineHistory();
+  }
+  
+  renderSchedule(medicine);
+}
+
+function checkMissedDoses() {
+  const today = new Date().toISOString().split('T')[0];
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  const yesterdayStr = yesterday.toISOString().split('T')[0];
+  
+  if (dailySchedules[yesterdayStr]) {
+    const medicine = medicines.find(m => m.id === dailySchedules[yesterdayStr].medicineId);
+    if (medicine) {
+      const timeSlots = getTimeSlotsForFrequency(medicine.frequency);
+      const missedDoses = timeSlots.filter(time => 
+        !dailySchedules[yesterdayStr].completed.includes(time)
+      );
+      
+      if (missedDoses.length > 0) {
+        // Notify user about missed doses
+        if (Notification.permission === 'granted') {
+          new Notification(`Dosis terlewat kemarin`, {
+            body: `Anda melewatkan ${missedDoses.length} dosis ${medicine.name} kemarin`
+          });
+        }
+      }
+    }
+  }
+}
+
+function getTimeSlotsForFrequency(frequency) {
+  switch (frequency) {
+    case 1: return ['08:00'];
+    case 2: return ['08:00', '20:00'];
+    case 3: return ['08:00', '13:00', '20:00'];
+    case 4: return ['08:00', '12:00', '16:00', '20:00'];
+    default: return [];
+  }
 }
 
 function updateComplianceDisplay(completedCount, totalDoses) {
@@ -428,6 +598,74 @@ function updateComplianceDisplay(completedCount, totalDoses) {
   }
 }
 
+// Notification Functions
+function setupNotificationPermission() {
+  if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
+    Notification.requestPermission().then(permission => {
+      console.log('Notification permission:', permission);
+    });
+  }
+}
+
+function scheduleNotifications(medicine) {
+  // Clear any existing notifications
+  clearAllScheduledNotifications();
+  
+  if (Notification.permission !== 'granted') return;
+  
+  const timeSlots = getTimeSlotsForFrequency(medicine.frequency);
+  const now = new Date();
+  
+  timeSlots.forEach(time => {
+    const [hours, minutes] = time.split(':').map(Number);
+    const notificationTime = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate(),
+      hours,
+      minutes,
+      0
+    );
+    
+    // If the time has already passed today, skip
+    if (notificationTime < now) return;
+    
+    const timeout = notificationTime.getTime() - now.getTime();
+    const timeoutId = setTimeout(() => {
+      showDoseNotification(medicine, time);
+    }, timeout);
+    
+    notificationTimeoutIds.push(timeoutId);
+  });
+}
+
+function showDoseNotification(medicine, time) {
+  if (Notification.permission === 'granted') {
+    new Notification(`Waktunya minum obat`, {
+      body: `Saatnya minum ${medicine.name} (${time})`
+    });
+  }
+}
+
+function clearAllScheduledNotifications() {
+  notificationTimeoutIds.forEach(id => clearTimeout(id));
+  notificationTimeoutIds = [];
+}
+
+// Medical Facts
+function showRandomMedicalFact() {
+  if (!medicalFactElement || medicalFacts.length === 0) return;
+  
+  const randomIndex = Math.floor(Math.random() * medicalFacts.length);
+  medicalFactElement.textContent = medicalFacts[randomIndex];
+  
+  // Rotate facts every 30 seconds
+  setInterval(() => {
+    const newIndex = (randomIndex + 1) % medicalFacts.length;
+    medicalFactElement.textContent = medicalFacts[newIndex];
+  }, 30000);
+}
+
 // LocalStorage Functions
 function saveMedicines() {
   localStorage.setItem('medicines', JSON.stringify(medicines));
@@ -435,6 +673,14 @@ function saveMedicines() {
 
 function saveCompletedDoses() {
   localStorage.setItem('completedDoses', JSON.stringify(completedDoses));
+}
+
+function saveDailySchedules() {
+  localStorage.setItem('dailySchedules', JSON.stringify(dailySchedules));
+}
+
+function saveMedicineHistory() {
+  localStorage.setItem('medicineHistory', JSON.stringify(medicineHistory));
 }
 
 // Initialize the application when DOM is loaded
