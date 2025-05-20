@@ -96,10 +96,8 @@
               <div class="stat-label">Hari</div>
             </div>
           </div>
-          
-          <button id="logoutBtn" class="btn btn-outline" style="margin-top: var(--space-md); display: none;">
-            <i class="fas fa-sign-out-alt"></i> Keluar
-          </button>
+
+          <button id="resetDataBtn" class="btn btn-danger">Reset Semua Data</button>
         </section>
 
         <!-- Medicine Card -->
@@ -150,15 +148,17 @@
                   <span id="medicineFrequency">-</span>
                 </div>
               </div>
-            </div>
-            
-            <div class="medicine-actions">
-              <button class="btn btn-primary" id="changeMedicineBtn">
-                <i class="fas fa-exchange-alt"></i> Ganti Obat
-              </button>
-              <button class="btn btn-outline" id="editMedicineBtn">
-                <i class="fas fa-edit"></i> Edit
-              </button>
+              <div class="medicine-actions">
+                <button class="btn btn-primary" id="changeMedicineBtn">
+                  <i class="fas fa-exchange-alt"></i> Ganti Obat
+                </button>
+                <button class="btn btn-outline" id="editMedicineBtn">
+                  <i class="fas fa-edit"></i> Edit
+                </button>
+                <button class="btn btn-outline btn-danger" id="deleteMedicineBtn">
+                  <i class="fas fa-trash"></i> Hapus
+                </button>
+              </div>
             </div>
           </div>
         </section>
@@ -230,7 +230,7 @@
     </div>
   </div>
 
-  <!-- Add Medicine Modal -->
+  <!-- Simplified Add Medicine Modal -->
   <div class="modal" id="medicineModal">
     <div class="modal-content">
       <div class="modal-header">
@@ -239,39 +239,36 @@
       </div>
       <form id="medicineForm">
         <input type="hidden" id="medicineEditId">
+        
         <div class="form-group">
-          <label for="medicineNameInput" class="form-label">Nama Obat</label>
-          <input type="text" id="medicineNameInput" class="form-input" placeholder="Contoh: Parasetamol 500mg" required>
+          <label for="medicineNameInput">Nama Obat</label>
+          <input type="text" id="medicineNameInput" placeholder="Contoh: Paracetamol" required list="medicineOptions">
+          <datalist id="medicineOptions">
+            <!-- Options will be added by JavaScript -->
+          </datalist>
         </div>
+        
         <div class="form-group">
-          <label for="medicineTypeInput" class="form-label">Jenis Obat</label>
-          <input type="text" id="medicineTypeInput" class="form-input" placeholder="Contoh: Analgesik & Antipiretik" required>
-        </div>
-        <div class="form-group">
-          <label for="medicineBenefitInput" class="form-label">Manfaat</label>
-          <input type="text" id="medicineBenefitInput" class="form-input" placeholder="Contoh: Mengurangi demam dan nyeri" required>
-        </div>
-        <div class="form-group">
-          <label for="medicineInstructionInput" class="form-label">Petunjuk Minum</label>
-          <input type="text" id="medicineInstructionInput" class="form-input" placeholder="Contoh: Sesudah makan" required>
-        </div>
-        <div class="form-group">
-          <label for="medicineFrequencyInput" class="form-label">Frekuensi</label>
-          <select id="medicineFrequencyInput" class="form-select" required>
-            <option value="">Pilih frekuensi</option>
-            <option value="1">1x sehari</option>
-            <option value="2">2x sehari (Pagi & Malam)</option>
-            <option value="3">3x sehari (Pagi, Siang, Malam)</option>
-            <option value="4">4x sehari (Pagi, Siang, Sore, Malam)</option>
+          <label for="reminderTime">Waktu Pengingat</label>
+          <select id="reminderTime" class="form-select">
+            <option value="08:00">Pagi (08:00)</option>
+            <option value="12:00">Siang (12:00)</option>
+            <option value="16:00">Sore (16:00)</option>
+            <option value="20:00">Malam (20:00)</option>
           </select>
         </div>
+
         <div class="form-actions">
+          <button type="button" id="testReminderBtn" class="btn btn-outline">
+            <i class="fas fa-bell"></i> Tes Pengingat
+          </button>
           <button type="button" class="btn btn-outline" id="cancelMedicineBtn">Batal</button>
-          <button type="submit" class="btn btn-primary" id="saveMedicineBtn">Simpan</button>
+          <button type="submit" class="btn btn-primary">Simpan</button>
         </div>
       </form>
     </div>
   </div>
+
   <!-- Select Medicine Modal -->
   <div class="modal" id="selectMedicineModal">
     <div class="modal-content">
@@ -290,20 +287,33 @@
     </div>
   </div>
 
+  <!-- History Modal -->
+  <div class="modal" id="historyModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Riwayat Obat</h2>
+        <button class="modal-close" id="closeHistoryModal">&times;</button>
+      </div>
+      <div id="historyList">
+        <p>Memuat riwayat...</p>
+      </div>
+    </div>
+  </div>
+
   <div class="container" id="formPage">
-        <form id="userForm" class="card input-card">
-          <h2><i class="fas fa-user-plus"></i> Data Pengguna</h2>
-          <div class="form-group">
-            <label for="name">Nama Lengkap</label>
-            <input type="text" id="name" placeholder="Masukkan Nama" required />
-          </div>
-          <div class="form-group">
-            <label for="bellyId">ID BellyPlus</label>
-            <input type="text" id="bellyId" placeholder="Contoh: BP-XXXXXX" required />
-          </div>
-          <button type="submit"><i class="fas fa-bell"></i>Masuk</button>
-          <button type="button" onclick="document.getElementById('formPage').style.display='none'">Tutup</button>
-        </form>
+    <form id="userForm" class="card input-card">
+      <h2><i class="fas fa-user-plus"></i> Data Pengguna</h2>
+      <div class="form-group">
+        <label for="name">Nama Lengkap</label>
+        <input type="text" id="name" placeholder="Masukkan Nama" required />
+      </div>
+      <div class="form-group">
+        <label for="bellyId">ID BellyPlus</label>
+        <input type="text" id="bellyId" placeholder="Contoh: BP-XXXXXX" required />
+      </div>
+      <button type="submit"><i class="fas fa-bell"></i>Masuk</button>
+      <button type="button" onclick="document.getElementById('formPage').style.display='none'">Tutup</button>
+    </form>
   </div>
 
   <script src="../js/s-pill.js"></script>

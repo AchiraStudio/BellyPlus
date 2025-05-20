@@ -31,6 +31,7 @@ const closeHistoryModal = document.getElementById('closeHistoryModal');
 const historyList = document.getElementById('historyList');
 const viewHistoryBtn = document.getElementById('viewHistoryBtn');
 const medicalFactElement = document.getElementById('medicalFact');
+const resetDataBtn = document.getElementById('resetDataBtn'); // Added reset button
 
 // State
 let medicines = [];
@@ -41,52 +42,224 @@ let dailySchedules = {};
 let medicineHistory = [];
 let notificationTimeoutIds = [];
 
-const medicineDatabase = {
+// Enhanced medicine database with more common medications
+const medicineDatabase  = {
   'Paracetamol': {
     type: 'Tablet',
+    frequency: 3,
     benefit: 'Mengurangi demam dan nyeri ringan hingga sedang',
-    instruction: 'Diminum setelah makan. Jangan melebihi dosis harian yang dianjurkan.'
+    instruction: 'Diminum setelah makan. Dosis maksimal 4x sehari (4000mg).'
   },
   'Amoxicillin': {
     type: 'Kapsul',
+    frequency: 3,
     benefit: 'Antibiotik untuk infeksi bakteri',
     instruction: 'Harus dihabiskan sesuai resep dokter. Minum dengan air putih.'
   },
   'Omeprazole': {
     type: 'Kapsul',
+    frequency: 1,
     benefit: 'Mengurangi asam lambung',
     instruction: 'Diminum 30 menit sebelum makan pagi.'
   },
   'Vitamin C': {
     type: 'Tablet kunyah',
+    frequency: 1,
     benefit: 'Meningkatkan daya tahan tubuh',
     instruction: 'Diminum setelah makan. Bisa dikunyah atau ditelan.'
+  },
+  'Cetirizine': {
+    type: 'Tablet',
+    frequency: 1,
+    benefit: 'Antihistamin untuk alergi',
+    instruction: 'Diminum malam hari sebelum tidur.'
+  },
+  'Ibuprofen': {
+    type: 'Tablet',
+    frequency: 3,
+    benefit: 'Mengurangi nyeri dan inflamasi',
+    instruction: 'Diminum setelah makan. Jangan melebihi dosis harian.'
   }
 };
 
-const medicalFacts = [
-  "Minum obat tepat waktu meningkatkan efektivitas pengobatan hingga 30%",
-  "Antibiotik harus dihabiskan sesuai resep meskipun gejala sudah membaik",
-  "Interaksi obat dengan grapefruit bisa berbahaya untuk beberapa jenis obat",
-  "Obat penurun demam bekerja optimal bila diminum dengan air hangat",
-  "Jangan mencampur obat dengan minuman berkafein tanpa konsultasi dokter",
-  "Simpan obat di tempat sejuk dan kering, hindari paparan sinar matahari langsung",
-  "Obat kadaluarsa bisa kehilangan efektivitas atau menjadi berbahaya"
-];
+// Modified to handle automatic medicine details
+function handleMedicineFormSubmit(e) {
+  e.preventDefault();
+  
+  const id = document.getElementById('medicineEditId').value || Date.now().toString();
+  const nameInput = document.getElementById('medicineNameInput');
+  const name = nameInput.value.trim();
+  
+  if (!name) {
+    alert('Silakan masukkan nama obat');
+    nameInput.focus();
+    return;
+  }
+  
+  // Get medicine details from database or use defaults
+  const medicineDetails = medicineDatabase[name] || {
+    type: 'Tablet',
+    frequency: 2, // Default frequency
+    benefit: 'Obat untuk mengatasi gejala yang dialami',
+    instruction: 'Diminum sesuai petunjuk dokter atau apoteker'
+  };
+  
+  const medicine = {
+    id,
+    name,
+    ...medicineDetails
+  };
+  
+  // Update or add medicine
+  const isEdit = !!document.getElementById('medicineEditId').value;
+  if (isEdit) {
+    const index = medicines.findIndex(m => m.id === id);
+    if (index !== -1) medicines[index] = medicine;
+  } else {
+    medicines.push(medicine);
+    if (statPills) statPills.textContent = medicines.length;
+    
+    // Add to history
+    medicineHistory.push({
+      action: 'added',
+      medicine,
+      date: new Date().toISOString()
+    });
+    saveMedicineHistory();
+  }
+  
+  saveMedicines();
+  
+  // Select and show the medicine
+  selectedMedicineId = id;
+  localStorage.setItem('selectedMedicineId', id);
+  showMedicineContent(medicine);
+  
+  medicineModal.classList.remove('show');
+}
+
+// Simplified modal functions
+function openAddMedicineModal() {
+  if (!medicineModal) return;
+  
+  document.getElementById('medicineModalTitle').textContent = 
+    medicines.length === 0 ? "Tambah Obat Pertama" : "Tambah Obat Baru";
+  
+  // Reset form and show only name field
+  medicineForm.reset();
+  document.getElementById('medicineEditId').value = '';
+  
+  // Focus on name input
+  const nameInput = document.getElementById('medicineNameInput');
+  if (nameInput) {
+    nameInput.value = '';
+    setTimeout(() => nameInput.focus(), 100);
+  }
+  
+  medicineModal.classList.add('show');
+}
+
+function setupMedicineAutocomplete() {
+  const input = document.getElementById('medicineNameInput');
+  if (!input) return;
+  
+  const datalist = document.createElement('datalist');
+  datalist.id = 'medicineSuggestions';
+  
+  Object.keys(medicineDatabase).forEach(medicine => {
+    const option = document.createElement('option');
+    option.value = medicine;
+    datalist.appendChild(option);
+  });
+  
+  document.body.appendChild(datalist);
+  input.setAttribute('list', 'medicineSuggestions');
+  
+  // Show details when a known medicine is selected
+  input.addEventListener('change', (e) => {
+    const selectedMedicine = medicineDatabase[e.target.value];
+    if (selectedMedicine) {
+      // You could show a preview of the medicine details here
+      console.log('Selected medicine:', selectedMedicine);
+    }
+  });
+}
+
+function initMedicineDatalist() {
+  const datalist = document.getElementById('medicineOptions');
+  if (!datalist) return;
+
+  // Clear any existing options
+  datalist.innerHTML = '';
+
+  // Add medicines from your database
+  Object.keys(medicineDatabase).forEach(medicineName => {
+    const option = document.createElement('option');
+    option.value = medicineName;
+    datalist.appendChild(option);
+  });
+}
+
+// Test notification button handler
+function setupTestReminderButton() {
+  const testBtn = document.getElementById('testReminderBtn');
+  if (!testBtn) return;
+  
+  testBtn.addEventListener('click', () => {
+    const medicineName = document.getElementById('medicineNameInput').value;
+    const reminderTime = document.getElementById('reminderTime').value;
+    
+    if (!medicineName) {
+      alert('Silakan masukkan nama obat terlebih dahulu');
+      return;
+    }
+    
+    // Request notification permission if not already granted
+    if (Notification.permission !== 'granted') {
+      Notification.requestPermission().then(permission => {
+        if (permission === 'granted') {
+          showTestNotification(medicineName, reminderTime);
+        }
+      });
+    } else {
+      showTestNotification(medicineName, reminderTime);
+    }
+  });
+}
+
+function showTestNotification(medicineName, time) {
+  const medicine = medicineDatabase[medicineName] || {
+    instruction: 'Diminum sesuai petunjuk dokter'
+  };
+  
+  new Notification(`🔔 Tes Pengingat Obat`, {
+    body: `Waktunya minum ${medicineName} (${time})\n${medicine.instruction}`,
+    icon: '../images/pill-icon.png'
+  });
+}
 
 // Initialize the application
 function initApp() {
-  medicineModal.classList.remove('show');
-  selectMedicineModal.classList.remove('show');
-  historyModal.classList.remove('show');
-  
+  // Safely hide modals if they exist
+  const modalsToHide = ['medicineModal', 'selectMedicineModal', 'historyModal'];
+  modalsToHide.forEach(modalId => {
+    const modal = document.getElementById(modalId);
+    if (modal) modal.classList.remove('show');
+  });
+
+  // Initialize the rest of the app
   loadFromLocalStorage();
   updateCurrentDate();
   initButtons();
-  showRandomMedicalFact();
-  setupNotificationPermission();
+  initMedicineDatalist();
+  setupTestReminderButton();
   
-  // Check for missed doses from previous days
+  // Only show medical fact if element exists
+  if (document.getElementById('medicalFact')) {
+    showRandomMedicalFact();
+  }
+  
+  setupNotificationPermission();
   checkMissedDoses();
 }
 
@@ -139,6 +312,14 @@ function initButtons() {
     selectMedicineModal.classList.remove('show');
     openAddMedicineModal();
   });
+
+  if (deleteMedicineBtn) {
+    deleteMedicineBtn.addEventListener('click', deleteCurrentMedicine);
+  }
+
+  if (resetDataBtn) {
+    resetDataBtn.addEventListener('click', confirmResetAllData);
+  }
 }
 
 // Medicine Modal Functions
@@ -159,7 +340,6 @@ function openEditMedicineModal() {
   if (medicine) {
     document.getElementById('medicineModalTitle').textContent = "Edit Obat";
     document.getElementById('medicineNameInput').value = medicine.name;
-    document.getElementById('medicineFrequencyInput').value = medicine.frequency;
     document.getElementById('medicineEditId').value = medicine.id;
     medicineModal.classList.add('show');
   }
@@ -182,29 +362,41 @@ function openHistoryModal() {
 function handleMedicineFormSubmit(e) {
   e.preventDefault();
   
-  const id = document.getElementById('medicineEditId').value || Date.now().toString();
-  const name = document.getElementById('medicineNameInput').value;
-  const frequency = document.getElementById('medicineFrequencyInput').value;
+  // Get form elements safely
+  const nameInput = document.getElementById('medicineNameInput');
+  const editIdInput = document.getElementById('medicineEditId');
   
-  // Auto-fill medicine details from database
+  // Check if elements exist
+  if (!nameInput || !editIdInput) {
+    console.error('Form elements not found');
+    return;
+  }
+  
+  const name = nameInput.value.trim();
+  if (!name) {
+    alert('Silakan masukkan nama obat');
+    nameInput.focus();
+    return;
+  }
+  
+  // Create or update medicine
+  const id = editIdInput.value || Date.now().toString();
   const medicineDetails = medicineDatabase[name] || {
     type: 'Tablet',
+    frequency: 2, // Default frequency
     benefit: 'Obat untuk mengatasi gejala yang dialami',
     instruction: 'Diminum sesuai petunjuk dokter'
   };
   
-  const medicine = {
-    id,
-    name,
-    frequency: parseInt(frequency),
-    ...medicineDetails
-  };
+  const medicine = { id, name, ...medicineDetails };
   
   // Update or add medicine
-  if (document.getElementById('medicineEditId').value) {
+  if (editIdInput.value) {
+    // Edit existing medicine
     const index = medicines.findIndex(m => m.id === id);
     if (index !== -1) medicines[index] = medicine;
   } else {
+    // Add new medicine
     medicines.push(medicine);
     if (statPills) statPills.textContent = medicines.length;
     
@@ -218,12 +410,9 @@ function handleMedicineFormSubmit(e) {
   }
   
   saveMedicines();
-  
-  // Select and show the medicine
   selectedMedicineId = id;
   localStorage.setItem('selectedMedicineId', id);
   showMedicineContent(medicine);
-  
   medicineModal.classList.remove('show');
 }
 
@@ -368,6 +557,7 @@ function showMedicineContent(medicine) {
   
   // Schedule notifications for this medicine
   scheduleNotifications(medicine);
+  updateMedicineReminders();
 }
 
 function renderMedicineInfo(medicine) {
@@ -681,6 +871,205 @@ function saveDailySchedules() {
 
 function saveMedicineHistory() {
   localStorage.setItem('medicineHistory', JSON.stringify(medicineHistory));
+}
+
+// Delete current medicine
+function deleteCurrentMedicine() {
+  if (!selectedMedicineId) return;
+
+  const confirmDelete = confirm("Apakah Anda yakin ingin menghapus obat ini?");
+  if (!confirmDelete) return;
+
+  // Add to history before deleting
+  const medicine = medicines.find(m => m.id === selectedMedicineId);
+  if (medicine) {
+    medicineHistory.push({
+      action: 'deleted',
+      medicine,
+      date: new Date().toISOString()
+    });
+    saveMedicineHistory();
+  }
+
+  medicines = medicines.filter(m => m.id !== selectedMedicineId);
+  selectedMedicineId = null;
+  localStorage.removeItem('selectedMedicineId');
+
+  if (statPills) statPills.textContent = medicines.length;
+  saveMedicines();
+
+  // Update UI
+  if (medicines.length === 0) {
+    medicineEmptyState.style.display = 'block';
+    medicineContent.style.display = 'none';
+    scheduleEmptyState.style.display = 'block';
+    scheduleContent.style.display = 'none';
+  } else {
+    openMedicineSelectionModal();
+  }
+}
+
+// Reset all data
+function confirmResetAllData() {
+  const confirmReset = confirm("Apakah Anda yakin ingin mereset SEMUA data? Tindakan ini tidak dapat dibatalkan.");
+  if (!confirmReset) return;
+
+  resetAllData();
+}
+
+function resetAllData() {
+  // Clear all data
+  medicines = [];
+  selectedMedicineId = null;
+  completedDoses = [];
+  dailySchedules = {};
+  startDate = new Date();
+  medicineHistory = [];
+
+  // Update localStorage
+  localStorage.setItem('medicines', JSON.stringify(medicines));
+  localStorage.removeItem('selectedMedicineId');
+  localStorage.setItem('completedDoses', JSON.stringify(completedDoses));
+  localStorage.setItem('dailySchedules', JSON.stringify(dailySchedules));
+  localStorage.setItem('startDate', startDate.toISOString());
+  localStorage.setItem('medicineHistory', JSON.stringify(medicineHistory));
+
+  // Update UI
+  if (statPills) statPills.textContent = '0';
+  if (statCompliance) statCompliance.textContent = '0%';
+  if (statDays) statDays.textContent = '0';
+  
+  medicineEmptyState.style.display = 'block';
+  medicineContent.style.display = 'none';
+  scheduleEmptyState.style.display = 'block';
+  scheduleContent.style.display = 'none';
+
+  alert('Semua data telah direset ke pengaturan awal.');
+}
+
+// Notification Functions
+let scheduledNotifications = [];
+
+function setupNotificationPermission() {
+  if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
+    Notification.requestPermission().then(permission => {
+      if (permission === 'granted') {
+        console.log('Notification permission granted');
+      }
+    });
+  }
+}
+
+function scheduleMedicineReminders(medicine) {
+  // Clear existing notifications
+  clearAllScheduledNotifications();
+
+  if (!medicine || !medicine.frequency) return;
+
+  const now = new Date();
+  const timeSlots = getTimeSlotsForFrequency(medicine.frequency);
+
+  timeSlots.forEach(time => {
+    const [hours, minutes] = time.split(':').map(Number);
+    const notificationTime = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate(),
+      hours,
+      minutes,
+      0
+    );
+
+    // If time already passed today, skip
+    if (notificationTime < now) return;
+
+    const timeoutMs = notificationTime.getTime() - now.getTime();
+
+    const timeoutId = setTimeout(() => {
+      showMedicineReminder(medicine, time);
+      // Schedule for next day
+      const nextDayTimeoutId = setTimeout(() => {
+        scheduleMedicineReminders(medicine);
+      }, 86400000 - timeoutMs); // 24 hours minus time already passed
+      scheduledNotifications.push(nextDayTimeoutId);
+    }, timeoutMs);
+
+    scheduledNotifications.push(timeoutId);
+  });
+}
+
+function showMedicineReminder(medicine, time) {
+  // Show browser notification
+  if (Notification.permission === 'granted') {
+    new Notification(`⏰ Waktunya Minum Obat`, {
+      body: `Saatnya minum ${medicine.name} (${time})\n${medicine.instruction}`,
+      icon: '../images/pill-icon.png',
+      vibrate: [200, 100, 200]
+    });
+  }
+
+  // Show custom popup
+  showCustomReminderPopup(medicine, time);
+}
+
+function clearAllScheduledNotifications() {
+  scheduledNotifications.forEach(id => clearTimeout(id));
+  scheduledNotifications = [];
+}
+
+// Custom Popup Notification
+function showCustomReminderPopup(medicine, time) {
+  const popup = document.createElement('div');
+  popup.className = 'reminder-popup';
+  popup.innerHTML = `
+    <div class="popup-content animate__animated animate__bounceIn">
+      <div class="popup-header">
+        <span class="popup-close">&times;</span>
+      </div>
+      <div class="popup-body">
+        <div class="popup-icon">
+          <i class="fas fa-bell fa-4x"></i>
+        </div>
+        <h3>Waktunya Minum Obat!</h3>
+        <div class="medicine-info">
+          <p><strong>${medicine.name}</strong></p>
+          <p>${time} • ${medicine.type}</p>
+        </div>
+        <p class="instruction">${medicine.instruction}</p>
+        <button class="btn btn-primary btn-confirm">
+          <i class="fas fa-check"></i> Sudah Diminum
+        </button>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(popup);
+
+  // Close button
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.remove();
+  });
+
+  // Confirm button
+  popup.querySelector('.btn-confirm').addEventListener('click', () => {
+    completeDose(medicine.id, time);
+    popup.remove();
+  });
+
+  // Auto close after 5 minutes
+  setTimeout(() => {
+    if (document.body.contains(popup)) {
+      popup.remove();
+    }
+  }, 300000);
+}
+
+// Call this function when medicine is selected/changed
+function updateMedicineReminders() {
+  const medicine = medicines.find(m => m.id === selectedMedicineId);
+  if (medicine) {
+    scheduleMedicineReminders(medicine);
+  }
 }
 
 // Initialize the application when DOM is loaded
